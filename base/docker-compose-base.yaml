@@ -1,0 +1,154 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+services:
+
+  orderer.ki-decentralized.de:
+    container_name: orderer.ki-decentralized.de
+    image: hyperledger/fabric-orderer:$IMAGE_TAG
+    environment:
+      - ORDERER_GENERAL_LOGLEVEL=INFO
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=/var/hyperledger/orderer/orderer.genesis.block
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp
+      # enabled TLS
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+      - ORDERER_GENERAL_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
+      - ORDERER_GENERAL_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: orderer
+    volumes:
+    - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+    - ../crypto-config/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp:/var/hyperledger/orderer/msp
+    - ../crypto-config/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/tls/:/var/hyperledger/orderer/tls
+    - orderer.ki-decentralized.de:/var/hyperledger/production/orderer
+    ports:
+      - 7050:7050
+
+  peer0.turktelekom.com:
+    container_name: peer0.turktelekom.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.turktelekom.com
+      - CORE_PEER_ADDRESS=peer0.turktelekom.com:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.turktelekom.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.turktelekom.com:7051
+      - CORE_PEER_LOCALMSPID=TurkTelekomMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/turktelekom.com/peers/peer0.turktelekom.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/turktelekom.com/peers/peer0.turktelekom.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.turktelekom.com:/var/hyperledger/production
+    ports:
+      - 7051:7051
+      - 7053:7053
+
+  peer1.turktelekom.com:
+    container_name: peer1.turktelekom.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.turktelekom.com
+      - CORE_PEER_ADDRESS=peer1.turktelekom.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.turktelekom.com:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.turktelekom.com:7051
+      - CORE_PEER_LOCALMSPID=TurkTelekomMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/turktelekom.com/peers/peer1.turktelekom.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/turktelekom.com/peers/peer1.turktelekom.com/tls:/etc/hyperledger/fabric/tls
+        - peer1.turktelekom.com:/var/hyperledger/production
+
+    ports:
+      - 8051:7051
+      - 8053:7053
+
+  peer0.turkcell.com:
+    container_name: peer0.turkcell.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.turkcell.com
+      - CORE_PEER_ADDRESS=peer0.turkcell.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.turkcell.com:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.turkcell.com:7051
+      - CORE_PEER_LOCALMSPID=TurkcellMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/turkcell.com/peers/peer0.turkcell.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/turkcell.com/peers/peer0.turkcell.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.turkcell.com:/var/hyperledger/production
+    ports:
+      - 9051:7051
+      - 9053:7053
+
+  peer1.turkcell.com:
+    container_name: peer1.turkcell.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.turkcell.com
+      - CORE_PEER_ADDRESS=peer1.turkcell.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.turkcell.com:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.turkcell.com:7051
+      - CORE_PEER_LOCALMSPID=TurkcellMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/turkcell.com/peers/peer1.turkcell.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/turkcell.com/peers/peer1.turkcell.com/tls:/etc/hyperledger/fabric/tls
+        - peer1.turkcell.com:/var/hyperledger/production
+    ports:
+      - 10051:7051
+      - 10053:7053
+
+  peer0.vodafone.com:
+    container_name: peer0.vodafone.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.vodafone.com
+      - CORE_PEER_ADDRESS=peer0.vodafone.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.vodafone.com:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.vodafone.com:7051
+      - CORE_PEER_LOCALMSPID=VodafoneMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/vodafone.com/peers/peer0.vodafone.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/vodafone.com/peers/peer0.vodafone.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.vodafone.com:/var/hyperledger/production
+    ports:
+      - 11051:7051
+      - 11053:7053
+
+  peer1.vodafone.com:
+    container_name: peer1.vodafone.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.vodafone.com
+      - CORE_PEER_ADDRESS=peer1.vodafone.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.vodafone.com:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.vodafone.com:7051
+      - CORE_PEER_LOCALMSPID=VodafoneMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/vodafone.com/peers/peer1.vodafone.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/vodafone.com/peers/peer1.vodafone.com/tls:/etc/hyperledger/fabric/tls
+        - peer1.vodafone.com:/var/hyperledger/production
+    ports:
+      - 12051:7051
+      - 12053:7053
