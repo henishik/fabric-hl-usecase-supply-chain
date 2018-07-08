@@ -13,11 +13,11 @@ This repository is to accomplish a common use case in Telco industry, which aims
 
 ### Diagram A
 
-<img src='./docs/res/use-case-diagram-brainstorm-a_20180705.jpg' width=400>
+<img src='./docs/res/use-case-diagram-brainstorm-a_20180705.JPG' width=400>
 
 ### Diagram B
 
-<img src='./docs/res/use-case-diagram-brainstorm-b_20180705.jpg' width=400>
+<img src='./docs/res/use-case-diagram-brainstorm-b_20180705.JPG' width=400>
 
 # Separation of Ledgers solution
 
