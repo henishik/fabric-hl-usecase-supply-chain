@@ -56,6 +56,7 @@ function networkUp () {
     replacePrivateKey
     generateChannelArtifacts
   fi
+
   if [ "${IF_COUCHDB}" == "couchdb" ]; then
     IMAGE_TAG=$IMAGETAG docker-compose -f $COMPOSE_FILE -f $COMPOSE_FILE_COUCH up -d 2>&1
   else
@@ -67,6 +68,7 @@ function networkUp () {
   fi
   # now run the end to end script
   docker exec cli scripts/script.sh $CHANNEL_NAME $CLI_DELAY $LANGUAGE $CLI_TIMEOUT
+
   if [ $? -ne 0 ]; then
     echo "ERROR !!!! Test failed"
     exit 1
