@@ -19,6 +19,22 @@ This repository is to accomplish a common use case in Telco industry, which aims
 
 <img src='./docs/res/use-case-diagram-brainstorm-b_20180705.jpg' width=400>
 
+# Separation of Ledgers solution
+
+There is one unique business requirement
+
+> An inquery from company A should be anonymous (Company B and C Should not know when and who make an inquery from company A)
+
+### High level Diagram
+
+<img src='./docs/res/different-channel-solution-diagram-a.png' width=400>
+
+### Todos
+
+- [ ] Create two peers for writing responsibility within a give organization
+- [ ] Create two peers for reading responsibility within a give organization
+- [ ] Instantiate a chaincode with populating initial five blacklist records (On two channels, which means 
+- [ ] 
 
 # General Business Process and Operations
 
