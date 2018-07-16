@@ -32,53 +32,76 @@ There is one unique business requirement
 
 # Network Bootstraping Process
 
-1. Create Genesis Block along with channel artifact for each organizations
+This scripts will automate and bootstrap common infrastructure for typical enterprise Distributed Ledger Network, which consists of:
+
+1. Generate Genesis Blocks
+2. Build and up each docker containers
+3. Create and configure channels
+4. Create and configure smartcontract
+5. Initialize ledger
+6. Test some sample queries
+
+## 1. Generate Genesis Blocks
+
+### 1.1. Create Genesis Block along with channel artifact for each organizations
 
 ```
 cryptogen generate --config=./crypto-config.yaml
+```
+
+### 1.2. Generate channel artifacts for each participant organizations
+
+```
 configtxgen -profile TurkTelecomOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
+
 configtxgen -profile TurkTelecomeChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID $CHANNEL_NAME
 configtxgen -profile TurkTelecomeChannel -outputAnchorPeersUpdate ./channel-artifacts/TurkTelekomMSPanchors.tx -channelID $CHANNEL_NAME -asOrg TurkTelekomMSP
 configtxgen -profile TurkTelecomeChannel -outputAnchorPeersUpdate ./channel-artifacts/TurkcellMSPanchors.tx -channelID $CHANNEL_NAME -asOrg TurkcellMSP
 configtxgen -profile TurkTelecomeChannel -outputAnchorPeersUpdate ./channel-artifacts/VodafoneMSPanchors.tx -channelID $CHANNEL_NAME -asOrg VodafoneMSP
 ```
 
-2. Build and up docker compose
+## 2. Build Docker Containers (each peers, singleton orderer)
+
+### 2.1. Build and up docker compose
 ```
 IMAGE_TAG=latest docker-compose -f docker-compose.yaml up -d 2>&1
 ```
 
-3. Create Channels
+## 3. Channel Configurations
+
+### 3.1. Configure each Channels
 ```
 peer channel join -b $CHANNEL_NAME.block
 ```
 
-4. Let peers join in specific channels
+### 3.2. Let peers join in specific channels
 ```
 peer channel join -b $CHANNEL_NAME.block
 ```
 
-5. update Anchor for each Peers
+### 3.3. update Anchor for each Peers
 ```
 peer channel update -o orderer.ki-decentralized.de:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx >&log.txt
 ```
 
-6. Install Chaincode on peer0 for each organizations
+## 3. Chaincode Configurations
+
+### 3.1. Install Chaincode on peer0 for each organizations
 ```
 peer chaincode install -n mycc -v ${VERSION} -l ${LANGUAGE} -p ${CC_SRC_PATH}
 ```
 
-7. Instantiate Chaincode
+### 3.2. Instantiate Chaincode
 ```
 peer chaincode instantiate -o orderer.ki-decentralized.de:7050 -C $CHANNEL_NAME -n mycc -l ${LANGUAGE} -v ${VERSION} -c '{"Args":["init"]}'
 ```
 
-8. Invoke InitLedger function on a chaincode
+### 3.3. Invoke InitLedger function on a chaincode
 ```
 peer chaincode invoke -o orderer.ki-decentralized.de:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["initLedger"]}'
 ```
 
-9. Invoke quaryAll function on a chaincode for a test
+### 3.4. Invoke quaryAll function on a chaincode for a test
 ```
 peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem -C turktelcomchannel -n mycc -c '{"Args":["queryAllCustomers"]}'
 ```
@@ -115,16 +138,20 @@ peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile /o
 
 # Todos Note
 
-- [ ] Create two peers for writing responsibility within a give organization
-- [ ] Create two peers for reading responsibility within a give organization
-- [ ] Instantiate a chaincode with populating initial five blacklist records (On two channels, which means 
-- [ ] Design General DLT Network Design based on business requirements
-- [ ] Build-up Distributed Ledger Business network based on general design
-- [ ] Launch network; create channels; join peers to channles
-- [ ] Define Assets Data Definitions
-- [ ] Implement Data Assets on Smart Contract
-- [ ] Design General functionalities and business logics on smart contracts
-- [ ] Implement business logics on smart contract
-- [ ] Install and Instantiate smart contract
-- [ ] Implement an application with CLI SDK
-- [ ] Implement an user-faced application with node SDK
+- [ ] Network Bootstrap script
+  - [ ] Create two peers for writing responsibility within a give organization
+  - [ ] Create two peers for reading responsibility within a give organization
+  - [ ] Instantiate a chaincode with populating initial five blacklist records (On two channels, which means 
+  - [ ] Design General DLT Network Design based on business requirements
+  - [ ] Build-up Distributed Ledger Business network based on general design
+  - [ ] Launch network; create channels; join peers to channles
+  - [ ] Install and Instantiate smart contract
+- [ ] Core Smart contract
+  - [ ] Define Assets Data Definitions
+  - [ ] Implement Data Assets on Smart Contract
+  - [ ] Design General functionalities and business logics on smart contracts
+  - [ ] Implement business logics on smart contract
+- [ ] Setup Explore Hyperledger
+- [ ] Setup Client SDK application
+  - [ ] Implement an user-faced application with node SDK
+  - [ ] Implement an application with CLI SDK
