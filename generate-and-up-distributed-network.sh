@@ -53,7 +53,7 @@ function networkUp () {
   # generate artifacts if they don't exist
   if [ ! -d "crypto-config" ]; then
     generateCerts
-    replacePrivateKey
+    # replacePrivateKey
     generateChannelArtifacts
   fi
 
@@ -66,6 +66,7 @@ function networkUp () {
     echo "ERROR !!!! Unable to start network"
     exit 1
   fi
+
   # now run the end to end script
   docker exec cli scripts/script.sh $CHANNEL_NAME $CLI_DELAY $LANGUAGE $CLI_TIMEOUT
 
@@ -84,7 +85,7 @@ CLI_TIMEOUT=10
 # default for delay between commands
 CLI_DELAY=3
 # channel name defaults to "mychannel"
-CHANNEL_NAME="turktelcomchannel"
+CHANNEL_NAME="turktelecomechannel"
 # use this as the default docker-compose yaml definition
 COMPOSE_FILE=docker-compose.yaml
 #

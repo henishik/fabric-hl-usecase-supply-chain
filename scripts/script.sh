@@ -22,7 +22,7 @@ COUNTER=1
 MAX_RETRY=5
 ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem
 
-CC_SRC_PATH="github.com/chaincode/chaincode_example02/go/"
+CC_SRC_PATH="github.com/chaincode/fabcar/"
 if [ "$LANGUAGE" = "node" ]; then
 	CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/chaincode_example02/node/"
 fi
@@ -92,23 +92,9 @@ installChaincode 0 3
 
 # Instantiate chaincode on peer0.Shipper
 echo "Instantiating chaincode on peer0.Shipper..."
+instantiateChaincode 0 1
 instantiateChaincode 0 2
-
-# Query chaincode on peer0.Authority
-echo "Querying chaincode on peer0.Authority..."
-chaincodeQuery 0 1 100
-
-# Invoke chaincode on peer0.Authority
-echo "Sending invoke transaction on peer0.Authority..."
-chaincodeInvoke 0 1
-
-## Install chaincode on peer1.Shipper
-echo "Installing chaincode on peer1.Shipper..."
-installChaincode 1 2
-
-# Query on chaincode on peer1.Shipper, check if the result is 100
-echo "Querying chaincode on peer1.Shipper..."
-chaincodeQuery 1 2 100
+# instantiateChaincode 0 3 SOME HOW GET AN ERROR WHEN INSTANTIATE ON PEER3
 
 echo
 echo "========= All GOOD, BYFN execution completed =========== "
