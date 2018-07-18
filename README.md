@@ -2,22 +2,60 @@
 
 This repository is to accomplish a common use case in Telco industry, which aims to share their blacklist customer over across the three biggest organizations with a decent privacies to read and write.
 
+### Purposes/Motivations
+
+1. Build a quick runable prototype with some basic business requirements and functionalities to support building a robust product road-map in the beginning
+2. Build a bootstrap script to bootstrap common overraped system structure
+3. Build a benchmark tool to measure and simulate technical scalabilities
+
+### Network Structure
+
+* Channel
+* Endorsement Policy
+
 ### Basic Requirements
-* Shared ledger stores a blacklisted customer information
+* Store `blacklisted customer information` as a digital asset on a global distributed shared ledger
+  * Maintain the shared customer information (digital assets) cooperately among across three organizations (Competitor/Non-trusted)
+* Each organiaztion can inquery to a ledger to fetch customer information by an unique customer identify
+
+### Advanced Requirements
 * An inquery from company A should be anonymous (Company B and C Should not know when and who make an inquery from company A)
+* Each organiaztion can inquery to a ledger to see if it is a specific customer blacklisted by an unique customer identify.
 * Data input will be totally from each parties Desition Making Data Ware House
 
-### Systems Infrastructure in high level (v1)
+### Systems Infrastructure in high level
 
-<img src='./docs/res/systems-infrastructure-in-high-level-v1.png' width=400>
+<img src='./docs/res/systems-infrastructure-in-high-level-v2.png' width=400>
 
-### Diagram A
+<!-- ### Diagram A
 
 <img src='./docs/res/use-case-diagram-brainstorm-a_20180705.JPG' width=400>
 
 ### Diagram B
 
-<img src='./docs/res/use-case-diagram-brainstorm-b_20180705.JPG' width=400>
+<img src='./docs/res/use-case-diagram-brainstorm-b_20180705.JPG' width=400> -->
+
+# How to access ancher peer in Organization A via CLI command
+
+### Procedures
+```
+```
+
+### Things to check
+
+# How to access ancher peer in Organization B via CLI command
+### Procedures
+```
+```
+
+### Things to check
+
+# How to access ancher peer in Organization C via CLI command
+### Procedures
+```
+```
+
+### Things to check
 
 # Separation of Ledgers solution
 
@@ -30,7 +68,16 @@ There is one unique business requirement
 <img src='./docs/res/different-channel-solution-diagram-a.png' width=400>
 
 
-# Network Bootstraping Process
+# Systems Architecture
+
+This is a brief use-case prototype consists of 3 components as below:
+
+A. Network Bootstraping Process  
+B. User-faced application to manage data  
+C. Network Bootstraping Process  
+
+
+# A. Network Bootstraping Process
 
 This scripts will automate and bootstrap common infrastructure for typical enterprise Distributed Ledger Network, which consists of:
 
@@ -106,7 +153,11 @@ peer chaincode invoke -o orderer.ki-decentralized.de:7050  --tls $CORE_PEER_TLS_
 peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem -C turktelcomchannel -n mycc -c '{"Args":["queryAllCustomers"]}'
 ```
 
-# Explore Hyperledger setup process
+# B. User-faced application to manage data
+
+
+
+# C. Explore Hyperledger setup process
 
 ## References
 
