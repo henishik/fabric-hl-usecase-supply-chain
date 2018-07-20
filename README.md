@@ -35,9 +35,15 @@ This repository is to accomplish a common use case in Telco industry, which aims
 * Build a benchmark system by building some infrastructure stress scenario to eliminate scalable uncertainties
 
 ### Advanced Requirements (MVP3)
+
 * An inquery from company A should be anonymous (Company B and C Should not know when and who make an inquery from company A)
 * Each organiaztion can inquery to a ledger to see if it is a specific customer blacklisted by an unique customer identify.
 * Data input will be totally from each parties Desition Making Data Ware House
+
+### Network Visualization and logging tool (MVP4)
+
+* Explore Blockchain
+* System reliability dashboard
 
 # How to Run-up basic fabric network
 
@@ -51,9 +57,22 @@ Use a single bootstrap script which automates fundamental procedures to define a
 
 ### Things to check
 
-- [ ] Ability to invoke `InitLedger`
-- [ ] Ability to invoke `queryAllCustomer`
-- [ ] Ability to invoke ``
+- [ ] Ability to invoke `InitLedger` and see how does it response in cases of:
+  - [ ] running only one peer of myself
+  - [ ] running only two peers of myself and another
+  - [ ] running all peers
+- [ ] Ability to invoke `queryAllCustomers`
+  - [ ] running only one peer of myself
+  - [ ] running only two peers of myself and another
+  - [ ] running all peers
+- [ ] Ability to invoke `addCustomer`
+  - [ ] running only one peer of myself
+  - [ ] running only two peers of myself and another
+  - [ ] running all peers
+- [ ] Ability to invoke `modifyCustomer`
+  - [ ] running only one peer of myself
+  - [ ] running only two peers of myself and another
+  - [ ] running all peers
 
 # How to access ancher peer in Organization B via CLI command
 ### Procedures
@@ -62,6 +81,23 @@ Use a single bootstrap script which automates fundamental procedures to define a
 
 ### Things to check
 
+- [ ] Ability to invoke `InitLedger`
+  - [ ] running only one peer of myself
+  - [ ] running only two peers of myself and another
+  - [ ] running all peers
+- [ ] Ability to invoke `queryAllCustomer`
+  - [ ] running only one peer of myself
+  - [ ] running only two peers of myself and another
+  - [ ] running all peers
+- [ ] Ability to invoke `addCustomer`
+  - [ ] running only one peer of myself
+  - [ ] running only two peers of myself and another
+  - [ ] running all peers
+- [ ] Ability to invoke `modifyCustomer`
+  - [ ] running only one peer of myself
+  - [ ] running only two peers of myself and another
+  - [ ] running all peers
+
 # How to access ancher peer in Organization C via CLI command
 ### Procedures
 ```
@@ -69,6 +105,22 @@ Use a single bootstrap script which automates fundamental procedures to define a
 
 ### Things to check
 
+- [ ] Ability to invoke `InitLedger`
+  - [ ] running only one peer of myself
+  - [ ] running only two peers of myself and another
+  - [ ] running all peers
+- [ ] Ability to invoke `queryAllCustomer`
+  - [ ] running only one peer of myself
+  - [ ] running only two peers of myself and another
+  - [ ] running all peers
+- [ ] Ability to invoke `addCustomer`
+  - [ ] running only one peer of myself
+  - [ ] running only two peers of myself and another
+  - [ ] running all peers
+- [ ] Ability to invoke `modifyCustomer`
+  - [ ] running only one peer of myself
+  - [ ] running only two peers of myself and another
+  - [ ] running all peers
 
 
 # Systems Architecture (Details)
