@@ -2,6 +2,8 @@
 
 This repository is to accomplish a common use case in Telco industry, which aims to share their blacklist customer over across the three biggest organizations with a decent privacies to read and write.
 
+## Project Overview
+
 ### Purposes/Motivations
 
 1. Build a quick runable prototype with some basic business requirements and functionalities to support building a robust product road-map in the beginning
@@ -15,7 +17,7 @@ This repository is to accomplish a common use case in Telco industry, which aims
 
 ### Systems Infrastructure in high level
 
-<img src='./docs/res/systems-infrastructure-in-high-level-v2.png' width=400>
+<img src='./docs/res/systems-infrastructure-in-high-level-v2.png' width=600>
 
 <!-- ### Diagram A
 
@@ -45,14 +47,27 @@ This repository is to accomplish a common use case in Telco industry, which aims
 * Explore Blockchain
 * System reliability dashboard
 
-# How to Run-up basic fabric network
+## How to Run-up basic fabric network
 
-Use a single bootstrap script which automates fundamental procedures to define and build a basic fabric network
+Use a single bootstrap script which automates fundamental procedures to define and build a basic fabric network, in which procedures consist of:
 
-# How to access ancher peer in Organization A via CLI command
+1. Generate each `crypto-config` based on a [config file](./crypto-config.yaml)
+2. Generate channel artifacts and genesis block
+3. Build and up each docker containers based on a [config file](./docker-compose.yaml)
+4. Basic channel configurations (Create/Join/AncherPeers)
+5. Basic chaincode configurations (Install/Instantiate)
+
+```
+$ git clone https://github.kigroup.de/t-ishikawa/dlt-fabric-use-case-telco/tree/develop
+$ cd dlt-fabric-use-case-telco
+$ ./generate-and-up-distributed-network.sh
+```
+
+## How to access ancher peer in Organization A via CLI command
 
 ### Procedures
 ```
+...
 ```
 
 ### Things to check
@@ -74,9 +89,10 @@ Use a single bootstrap script which automates fundamental procedures to define a
   - [ ] running only two peers of myself and another
   - [ ] running all peers
 
-# How to access ancher peer in Organization B via CLI command
+## How to access ancher peer in Organization B via CLI command
 ### Procedures
 ```
+...
 ```
 
 ### Things to check
@@ -98,9 +114,10 @@ Use a single bootstrap script which automates fundamental procedures to define a
   - [ ] running only two peers of myself and another
   - [ ] running all peers
 
-# How to access ancher peer in Organization C via CLI command
+## How to access ancher peer in Organization C via CLI command
 ### Procedures
 ```
+...
 ```
 
 ### Things to check
@@ -123,16 +140,15 @@ Use a single bootstrap script which automates fundamental procedures to define a
   - [ ] running all peers
 
 
-# Systems Architecture (Details)
+## Systems Architecture (Details)
 
 [Details in separate page](./docs/syste-architecture-in-details/)
 
-
-# Busienss Estimations
+## Busienss Estimations
 
 [Product Road Map in separate page](./docs/product-road-map/)
 
-# Todos Note
+## Todos Note
 
 - [ ] Network Bootstrap script
   - [ ] Create two peers for writing responsibility within a give organization
