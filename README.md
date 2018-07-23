@@ -105,7 +105,7 @@ $ peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile 
   - [ ] running only two peers of myself and another
   - [x] running all peers
 
-## How to access ancher peer in Organization B via CLI command
+## How to access ancher peer in TurkCell via CLI command and check basic functionalities
 ### Procedures
 ```
 ...
@@ -130,7 +130,7 @@ $ peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile 
   - [ ] running only two peers of myself and another
   - [ ] running all peers
 
-## How to access ancher peer in Organization C via CLI command
+## How to access ancher peer in Vodafone via CLI command and check basic functionalities
 ### Procedures
 ```
 ...
