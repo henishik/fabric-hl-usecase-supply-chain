@@ -1,6 +1,6 @@
 # Fabric Hyperledger Telco Use Case Prototype
 
-This repository is to accomplish a common use case in Telco industry, which aims to share their blacklist customer over across the three biggest organizations with a decent privacies to read and write.
+A bootstrap project for a common use case in Telco industry, which aims to share their blacklist customer over across multiple organizations with aiming some private-data requirements. This activity is a part of [IDPP#22](https://github.kigroup.de/ki-decentralized/IDPPs/issues/22)
 
 ## Project Overview
 
@@ -9,11 +9,6 @@ This repository is to accomplish a common use case in Telco industry, which aims
 1. Build a quick runable prototype with some basic business requirements and functionalities to support building a robust product road-map in the beginning
 2. Build a bootstrap script to bootstrap common overraped system structure
 3. Build a benchmark tool to measure and simulate technical scalabilities
-
-### Network Structure
-
-* Channel
-* Endorsement Policy
 
 ### Systems Infrastructure in high level
 
