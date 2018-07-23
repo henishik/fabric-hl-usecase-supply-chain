@@ -17,7 +17,7 @@ This repository is to accomplish a common use case in Telco industry, which aims
 
 ### Systems Infrastructure in high level
 
-<img src='./docs/res/systems-infrastructure-in-high-level-v2.png' width=600>
+<img src='./docs/res/systems-infrastructure-in-high-level-v2.png' width=760>
 
 <!-- ### Diagram A
 
@@ -85,6 +85,11 @@ $ peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile 
 $ peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem -C turktelecomechannel -n mycc -c '{"Args":["queryAllCustomer"]}'
 -> OUTPUT
 [chaincodeCmd] chaincodeInvokeOrQuery -> INFO 001 Chaincode invoke successful. result: status:200 payload:"[{\"Key\":\"0\", \"Record\":{\"name\":\"Alice\"}},{\"Key\":\"1\", \"Record\":{\"name\":\"Bob\"}},{\"Key\":\"2\", \"Record\":{\"name\":\"Alex\"}},{\"Key\":\"3\", \"Record\":{\"name\":\"Tom\"}},{\"Key\":\"4\", \"Record\":{\"name\":\"Michel\"}}]"
+
+$ peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem -C turktelecomechannel -n mycc -c '{"Args":["addCustomerToBlacklist", "99", "NAME", "YES"]}'
+
+$ modifyCustomer
+-> Modify isBlacklisted status for a specific customer
 ```
 
 ### Things to check
@@ -97,7 +102,7 @@ $ peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile 
   - [ ] running only one peer of myself
   - [ ] running only two peers of myself and another
   - [x] running all peers
-- [ ] Ability to invoke `addCustomer`
+- [x] Ability to invoke `addCustomer`
   - [ ] running only one peer of myself
   - [ ] running only two peers of myself and another
   - [ ] running all peers
@@ -155,6 +160,14 @@ $ peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile 
   - [ ] running only one peer of myself
   - [ ] running only two peers of myself and another
   - [ ] running all peers
+
+## How to Update a chaincode (WIP)
+### Procedures
+```
+$ docker exec -it 'cli' bash
+
+$ peer chaincode update -o orderer.ki-decentralized.de:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem -C turktelcomchannel -n mycc -c '{"Args":["wrong function", "0"]}'
+```
 
 
 ## Systems Architecture (Details)

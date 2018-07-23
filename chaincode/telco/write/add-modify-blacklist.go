@@ -108,6 +108,22 @@ This method does not take any arguments. Returns JSON string containing results.
 	return shim.Success(buffer.Bytes())
 }
 
+func (s *SmartContract) addCustomer(
+	APIstub shim.ChaincodeStubInterface,
+	args []string) sc.Response {
+
+	if len(args) != 3 {
+		return shim.Error("Incorrect number of arguments. Expecting 3")
+	}
+
+	var customer = Customer{Name: args[1],isBlack: args[2]}
+
+	customerAsBytes, _ := json.Marshal(customer)
+	APIstub.PutState(args[0], customerAsBytes)
+
+	return shim.Success(nil)
+}
+
 /*
  * The Invoke method is called as a result of an application request to run the Smart Contract "fabcar"
  * The calling application program has also specified the particular smart contract function to be called, with arguments
@@ -122,7 +138,7 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 	} else if function == "initLedger" {
 		return s.initLedger(APIstub)
 	} else if function == "addCustomerToBlacklist" {
-		// return s.createCar(APIstub, args)
+		return s.addCustomer(APIstub, args)
 	} else if function == "queryAllCustomer" {
 		return s.queryAllCustomer(APIstub)
 	}
