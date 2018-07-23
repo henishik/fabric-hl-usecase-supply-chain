@@ -88,8 +88,7 @@ $ peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile 
 
 $ peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem -C turktelecomechannel -n mycc -c '{"Args":["addCustomerToBlacklist", "99", "NAME", "YES"]}'
 
-$ modifyCustomer
--> Modify isBlacklisted status for a specific customer
+$ peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem -C turktelecomechannel -n mycc -c '{"Args":["modifyCustomerStatus", "99", "NAMEMODIFY"]}'
 ```
 
 ### Things to check
@@ -105,11 +104,11 @@ $ modifyCustomer
 - [x] Ability to invoke `addCustomer`
   - [ ] running only one peer of myself
   - [ ] running only two peers of myself and another
-  - [ ] running all peers
-- [ ] Ability to invoke `modifyCustomer`
+  - [x] running all peers
+- [x] Ability to invoke `modifyCustomer`
   - [ ] running only one peer of myself
   - [ ] running only two peers of myself and another
-  - [ ] running all peers
+  - [x] running all peers
 
 ## How to access ancher peer in Organization B via CLI command
 ### Procedures

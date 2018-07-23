@@ -75,6 +75,22 @@ services:
     networks:
       - byfn
 
+  caturktelekom:
+    image: hyperledger/fabric-ca
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=caturktelekom
+      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.turktelekom.com-cert.pem
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/***CHANGE_TO_THE_PROPER_PRIVATE_KEY***
+    ports:
+      - "7054:7054"
+    command: sh -c 'fabric-ca-server start --config /etc/hyperledger/fabric-ca-server-config/ca_config.yaml -d -b admin:adminpw'
+    volumes:
+      - /Users/t.ish/Desktop/DLT-telco/code/dlt-fabric-use-case-telco/crypto-config/peerOrganizations/turktelekom.com/ca:/etc/hyperledger/fabric-ca-server-config
+    container_name: caturktelekom
+    networks:
+      - byfn
+
   cli:
     container_name: cli
     image: hyperledger/fabric-tools:$IMAGE_TAG

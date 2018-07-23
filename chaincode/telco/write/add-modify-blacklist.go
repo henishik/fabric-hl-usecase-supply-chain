@@ -124,6 +124,27 @@ func (s *SmartContract) addCustomer(
 	return shim.Success(nil)
 }
 
+func (s *SmartContract) modifyCustomerStatus(
+	APIstub shim.ChaincodeStubInterface,
+	args []string) sc.Response {
+
+	if len(args) != 2 {
+		return shim.Error("Incorrect number of arguments. Expecting 2")
+	}
+
+	customerAsBytes, _ := APIstub.GetState(args[0])
+	customer := Customer{}
+
+	json.Unmarshal(customerAsBytes, &customer)
+	// customer.isBlack = args[1]
+	customer.Name = args[1]
+
+	customerAsBytes, _ = json.Marshal(customer)
+	APIstub.PutState(args[0], customerAsBytes)
+
+	return shim.Success(nil)
+}
+
 /*
  * The Invoke method is called as a result of an application request to run the Smart Contract "fabcar"
  * The calling application program has also specified the particular smart contract function to be called, with arguments
@@ -141,6 +162,8 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 		return s.addCustomer(APIstub, args)
 	} else if function == "queryAllCustomer" {
 		return s.queryAllCustomer(APIstub)
+	} else if function == "modifyCustomerStatus" {
+		return s.modifyCustomerStatus(APIstub, args)
 	}
 
 	return shim.Error("Invalid Smart Contract function name.")
