@@ -63,23 +63,40 @@ $ cd dlt-fabric-use-case-telco
 $ ./generate-and-up-distributed-network.sh
 ```
 
-## How to access ancher peer in Organization A via CLI command
+## How to access ancher peer in TurkTelekom via CLI command and check basic functionalities
 
 ### Procedures
 ```
-...
+$ docker exec -it 'cli' bash
+
+$ printenv
+CORE_PEER_ADDRESS=peer0.turktelekom.com:7051
+CORE_PEER_TLS_ENABLED=true
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/turktelekom.com/users/Admin@turktelekom.com/msp
+CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/turktelekom.com/peers/peer0.turktelekom.com/tls/server.crt
+CORE_PEER_LOCALMSPID=TurkTelekomMSP
+CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/turktelekom.com/peers/peer0.turktelekom.com/tls/ca.crt
+CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/turktelekom.com/peers/peer0.turktelekom.com/tls/server.key
+
+$ peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem -C turktelecomechannel -n mycc -c '{"Args":["initLedger"]}'
+-> OUTPUT
+[chaincodeCmd] chaincodeInvokeOrQuery -> INFO 001 Chaincode invoke successful. result: status:200
+
+$ peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem -C turktelecomechannel -n mycc -c '{"Args":["queryAllCustomer"]}'
+-> OUTPUT
+[chaincodeCmd] chaincodeInvokeOrQuery -> INFO 001 Chaincode invoke successful. result: status:200 payload:"[{\"Key\":\"0\", \"Record\":{\"name\":\"Alice\"}},{\"Key\":\"1\", \"Record\":{\"name\":\"Bob\"}},{\"Key\":\"2\", \"Record\":{\"name\":\"Alex\"}},{\"Key\":\"3\", \"Record\":{\"name\":\"Tom\"}},{\"Key\":\"4\", \"Record\":{\"name\":\"Michel\"}}]"
 ```
 
 ### Things to check
 
-- [ ] Ability to invoke `InitLedger` and see how does it response in cases of:
+- [x] Ability to invoke `InitLedger` and see how does it response in cases of:
   - [ ] running only one peer of myself
   - [ ] running only two peers of myself and another
-  - [ ] running all peers
-- [ ] Ability to invoke `queryAllCustomers`
+  - [x] running all peers
+- [x] Ability to invoke `queryAllCustomers`
   - [ ] running only one peer of myself
   - [ ] running only two peers of myself and another
-  - [ ] running all peers
+  - [x] running all peers
 - [ ] Ability to invoke `addCustomer`
   - [ ] running only one peer of myself
   - [ ] running only two peers of myself and another
