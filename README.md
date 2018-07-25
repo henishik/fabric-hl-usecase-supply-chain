@@ -26,10 +26,32 @@ A bootstrap project for a common use case in Telco industry, which aims to share
 * Store `blacklisted customer information` as a digital asset on a global distributed shared ledger
   * Maintain the shared customer information (digital assets) cooperately among across three organizations (Competitor/Non-trusted)
 * Each organiaztion can inquery to a ledger to fetch customer information by an unique customer identify
+* Proof of Concepts on how to define endorsement policies by designing query test-guideline and fulfilling them
 
 ### Internal Benchmark Tool (MVP2)
 
 * Build a benchmark system by building some infrastructure stress scenario to eliminate scalable uncertainties
+
+***A simple inserting benchmark***
+
+```
+1. Determine x(10 to 60, no duplications) numbers(seconds to make a query) to input within a minute
+2. Insert a blacklist record at a specific second which was defined in phase 1
+3. Repeat phase 1 and 2 for y(5 to 30) times(minutes) 
+4. See a transaction log to reconcile the transactions to have an inserting benchmark
+```
+
+***Figure out how to see transaction logs and world state in given place:***
+
+- [ ] Global Shared Ledger
+- [ ] Channel
+- [ ] Peer 0 Organization A
+- [ ] Peer 1 Organization A
+- [ ] Peer 0 Organization B
+- [ ] Peer 1 Organization B
+- [ ] Peer 0 Organization C
+- [ ] Peer 1 Organization C
+
 
 ### Advanced Requirements (MVP3)
 
@@ -117,10 +139,10 @@ $ peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile 
   - [ ] running only one peer of myself
   - [ ] running only two peers of myself and another
   - [ ] running all peers
-- [ ] Ability to invoke `queryAllCustomer`
+- [x] Ability to invoke `queryAllCustomer`
   - [ ] running only one peer of myself
   - [ ] running only two peers of myself and another
-  - [ ] running all peers
+  - [x] running all peers
 - [ ] Ability to invoke `addCustomer`
   - [ ] running only one peer of myself
   - [ ] running only two peers of myself and another
@@ -142,10 +164,10 @@ $ peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile 
   - [ ] running only one peer of myself
   - [ ] running only two peers of myself and another
   - [ ] running all peers
-- [ ] Ability to invoke `queryAllCustomer`
+- [x] Ability to invoke `queryAllCustomer`
   - [ ] running only one peer of myself
   - [ ] running only two peers of myself and another
-  - [ ] running all peers
+  - [x] running all peers
 - [ ] Ability to invoke `addCustomer`
   - [ ] running only one peer of myself
   - [ ] running only two peers of myself and another
