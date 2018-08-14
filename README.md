@@ -30,6 +30,8 @@ A bootstrap project for a common use case in Telco industry, which aims to share
 
 ### Supply Chain User Interface showcase (MVP2)
 
+<img src='./docs/res/supply-chain-showcase-concept-diagram.png' width=760>
+
 ### Internal Benchmark Tool (MVP3)
 
 * Build a benchmark system by building some infrastructure stress scenario to eliminate scalable uncertainties
