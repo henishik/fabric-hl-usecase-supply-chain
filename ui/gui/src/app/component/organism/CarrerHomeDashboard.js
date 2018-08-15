@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {fetchAllShipmentListOnCarrier} from '../../action';
+import {updateShipmentStatusOnCarrier} from '../../action';
 
 function mapStateToProps(state) {
   return {
@@ -8,7 +9,10 @@ function mapStateToProps(state) {
   };
 }
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  fetchAllShipmentListOnCarrier: () => dispatch(fetchAllShipmentListOnCarrier())
+  fetchAllShipmentListOnCarrier: () => dispatch(fetchAllShipmentListOnCarrier()),
+  updateShipmentStatusOnCarrier: (id, currentStatus) => dispatch(
+    updateShipmentStatusOnCarrier(id, currentStatus)
+  )
 });
 
 class CarrierHomeDashboard extends Component {
@@ -21,11 +25,31 @@ class CarrierHomeDashboard extends Component {
     this.props.fetchAllShipmentListOnCarrier();
   }
 
+  updateShipmentStatus(id, currentStatus) {
+    this.props.updateShipmentStatusOnCarrier(id, currentStatus)
+  }
+
   render() {
     const shipmentListArray = this.props.shipmentList
     let shipmentCells = ""
     if (shipmentListArray) {
       shipmentCells = shipmentListArray.map((value, key) => {
+
+        let actionButton = ""
+
+        if (value.Record.status === "waiting for carrier") {
+          actionButton = <button onClick={this.updateShipmentStatus.bind(this, value.Key, value.Record.status)}>accept</button>
+        } else if (value.Record.status === "waiting for pickup") {
+          actionButton = <button onClick={this.updateShipmentStatus.bind(this, value.Key, value.Record.status)}>pickup</button>
+        } else if (value.Record.status === "waiting for delivery") {
+          actionButton = <div>
+            <button>log location</button><br/>
+            <button onClick={this.updateShipmentStatus.bind(this, value.Key, value.Record.status)}>delivery</button>
+          </div>
+        } else {
+          actionButton = <p>-</p>
+        }
+
         return (
           <tr>
             <td>{value.Key}</td>
@@ -37,14 +61,15 @@ class CarrierHomeDashboard extends Component {
             <td>{value.Record.lognitude}</td>
             <td>{value.Record.shipperId}</td>
             <td>{value.Record.carrierId? value.Record.carrierId: <button>Assing carrier</button>}</td>
+            <td>{actionButton}</td>
           </tr>
         )
       })
     }
 
     return (
-      <div className="scdemo">
-        <h1>Carrier Home Dashboard</h1>
+      <div classname="scdemo">
+        <h1>carrier home dashboard</h1>
         <table>
           <tr>
             <td>ledger key</td>
@@ -56,56 +81,8 @@ class CarrierHomeDashboard extends Component {
             <td>lognitude</td>
             <td>shipper</td>
             <td>carrier</td>
+            <td>action</td>
           </tr>
-          {/* <tr>
-            <td>4F30880E84638F3B4F2DCFE3CC53022CCAE10D491689E0DAC13B85C9C3A8F0E7</td>
-            <td>very expensive material 100098</td>
-            <td>50.936508</td>
-            <td>6.939782</td>
-            <td>200.00</td>
-            <td>waiting for carrier</td>
-            <td>awesome shipper</td>
-            <td>
-              <button>Accept</button>
-              <button>Decline</button>
-              </td>
-          </tr>
-          <tr>
-            <td>4F30880E84638F3B4F2DCFE3CC53022CCAE10D491689E0DAC13B85C9C3A8F0E7</td>
-            <td>very expensive material 100098</td>
-            <td>50.936508</td>
-            <td>6.939782</td>
-            <td>200.00</td>
-            <td>waiting for carrier</td>
-            <td>awesome shipper</td>
-            <td>
-              <button>Pickup</button>
-              </td>
-          </tr>
-          <tr>
-            <td>4F30880E84638F3B4F2DCFE3CC53022CCAE10D491689E0DAC13B85C9C3A8F0E7</td>
-            <td>very expensive material 100098</td>
-            <td>50.936508</td>
-            <td>6.939782</td>
-            <td>200.00</td>
-            <td>waiting for carrier</td>
-            <td>awesome shipper</td>
-            <td>
-              <button>Log location</button>
-              </td>
-          </tr>
-          <tr>
-            <td>4F30880E84638F3B4F2DCFE3CC53022CCAE10D491689E0DAC13B85C9C3A8F0E7</td>
-            <td>very expensive material 100098</td>
-            <td>50.936508</td>
-            <td>6.939782</td>
-            <td>200.00</td>
-            <td>waiting for carrier</td>
-            <td>awesome shipper</td>
-            <td>
-              <button>delivery</button>
-              </td>
-          </tr> */}
           {shipmentCells}
         </table>
       </div>
