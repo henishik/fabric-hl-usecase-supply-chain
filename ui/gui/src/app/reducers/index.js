@@ -3,7 +3,8 @@ import {
   CREATE_SHIPMENT_ACTION,
   FETCH_ALL_SHIPMENT_LIST_ON_CARRIER,
   UPDATE_SHIPMENT_STATUS,
-  FETCH_ALL_SHIPMENT_LIST_ON_SHIPPER
+  FETCH_ALL_SHIPMENT_LIST_ON_SHIPPER,
+  UPDATE_SHIPMENT_STATUS_ON_SHIPPER
 } from '../action';
 
 // import {combineReducers} from 'redux-immutable';
@@ -16,6 +17,8 @@ const {routerReducer} = require('react-router-redux');
 
 function shipperReducer(state = {}, action) {
   switch (action.type) {
+    case UPDATE_SHIPMENT_STATUS_ON_SHIPPER:
+      return state
     case FETCH_ALL_SHIPMENT_LIST_ON_SHIPPER:
       return {
         shipmentList: action.data

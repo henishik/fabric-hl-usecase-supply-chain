@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {createShipment} from '../../action';
 import {fetchAllShipmentListOnShipper} from '../../action';
+import {updateShipmentStatusOnShipper} from '../../action';
 
 function mapStateToProps(state) {
   return {
@@ -11,6 +12,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = (dispatch, ownProps) => ({
   createShipment: () => dispatch(createShipment()),
   fetchAllShipmentListOnShipper: (shipper_id) => dispatch(fetchAllShipmentListOnShipper(shipper_id)),
+  updateShipmentStatus: (id, currentStatus) => dispatch(updateShipmentStatusOnShipper(id, currentStatus)),
 });
 
 class ShipperHomeDashboard extends Component {
@@ -21,6 +23,10 @@ class ShipperHomeDashboard extends Component {
 
   onCreateShipment() {
     this.props.createShipment();
+  }
+
+  updateShipmentStatus(id, currentStatus) {
+    this.props.updateShipmentStatus(id, currentStatus)
   }
 
   componentDidMount() {
@@ -39,7 +45,7 @@ class ShipperHomeDashboard extends Component {
         let actionButton = "-"
 
         if (value.Record.status === "waiting for confirm POD") {
-          actionButton = <button>Confirm POD</button>
+          actionButton = <button onClick={this.updateShipmentStatus.bind(this, value.Key, value.Record.status)}>Confirm POD</button>
         } else if (value.Record.status === "waiting for payment") {
           actionButton = <button>Payment</button>
         }

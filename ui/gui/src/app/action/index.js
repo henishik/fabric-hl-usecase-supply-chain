@@ -11,6 +11,16 @@ export const assignCarrier = (target_shipment_id) => dispatch => {
   }));
 };
 
+export const UPDATE_SHIPMENT_STATUS_ON_SHIPPER = 'UPDATE_SHIPMENT_STATUS';
+export const updateShipmentStatusOnShipper = (target_shipment_id, current_status) => dispatch => {
+  fetch('http://localhost:9998/api/shipment/status/update/' + target_shipment_id + '/' + current_status)
+  .then(response => response.json())
+  .then(json => dispatch({
+    type: UPDATE_SHIPMENT_STATUS_ON_SHIPPER,
+    data: json
+  }));
+};
+
 export const UPDATE_SHIPMENT_STATUS = 'UPDATE_SHIPMENT_STATUS';
 export const updateShipmentStatusOnCarrier = (target_shipment_id, current_status) => dispatch => {
   console.log(target_shipment_id)
