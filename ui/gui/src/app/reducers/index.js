@@ -1,7 +1,8 @@
 import {
   RECIEVE_INITIAL_DATA,
   CREATE_SHIPMENT_ACTION,
-  FETCH_ALL_SHIPMENT_LIST_ON_CARRIER
+  FETCH_ALL_SHIPMENT_LIST_ON_CARRIER,
+  UPDATE_SHIPMENT_STATUS
 } from '../action';
 
 // import {combineReducers} from 'redux-immutable';
@@ -42,6 +43,8 @@ function shipmentListCarrier(state = {}, action) {
       return {
         shipmentList: action.data
       };
+    case UPDATE_SHIPMENT_STATUS:
+      return state;
     default:
       return state
   }
