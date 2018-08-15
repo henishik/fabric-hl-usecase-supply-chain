@@ -62,6 +62,8 @@
 		 return s.assignCarrier(APIstub, args)
 	 } else if function == "queryShipmentsByCarrierId" {
 		 return s.queryShipmentsByCarrierId(APIstub, args)
+	 } else if function == "queryShipmentsByShipperId" {
+		 return s.queryShipmentsByShipperId(APIstub, args)
 	 } else if function == "updateShipmentStatus" {
 		 return s.updateShipmentStatus(APIstub, args)
 	 }
@@ -227,6 +229,22 @@
  
 	 return buffer.Bytes(), nil
  }
+
+ func (s *SmartContract) queryShipmentsByShipperId(stub shim.ChaincodeStubInterface, args []string) sc.Response {
+	if len(args) < 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+
+	shipper_id := strings.ToLower(args[0])
+	queryString := fmt.Sprintf("{\"selector\":{\"shipperId\":\"%s\"}}", shipper_id)
+	queryResults, err := getQueryResultForQueryString(stub, queryString)
+
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	return shim.Success(queryResults)
+}
  
  func (s *SmartContract) queryShipmentsByCarrierId(stub shim.ChaincodeStubInterface, args []string) sc.Response {
  
