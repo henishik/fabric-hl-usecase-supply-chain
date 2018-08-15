@@ -44,6 +44,17 @@ export const fetchInitialData = () => dispatch => {
   }));
 };
 
+export const FETCH_ALL_SHIPMENT_LIST_ON_SHIPPER = 'FETCH_ALL_SHIPMENT_LIST_ON_SHIPPER';
+export const fetchAllShipmentListOnShipper = (shipper_id) => dispatch => {
+  console.log()
+  fetch('http://localhost:9998/api/shipment/list/shipper/' + shipper_id)
+  .then(response => response.json())
+  .then(json => dispatch({
+    type: FETCH_ALL_SHIPMENT_LIST_ON_SHIPPER,
+    data: json
+  }));
+};
+
 export const FETCH_ALL_SHIPMENT_LIST_ON_CARRIER = 'FETCH_ALL_SHIPMENT_LIST_ON_CARRIER';
 export const fetchAllShipmentListOnCarrier = () => dispatch => {
   fetch('http://localhost:9998/api/shipment/list/carrier')
