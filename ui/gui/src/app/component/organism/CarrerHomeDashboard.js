@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {fetchAllShipmentListOnCarrier} from '../../action';
 import {updateShipmentStatusOnCarrier} from '../../action';
+import {logShipmentLocation} from '../../action';
 
 function mapStateToProps(state) {
   return {
@@ -10,6 +11,7 @@ function mapStateToProps(state) {
 }
 const mapDispatchToProps = (dispatch, ownProps) => ({
   fetchAllShipmentListOnCarrier: () => dispatch(fetchAllShipmentListOnCarrier()),
+  logShipmentLocation: (shipper_id) => dispatch(logShipmentLocation(shipper_id)),
   updateShipmentStatusOnCarrier: (id, currentStatus) => dispatch(
     updateShipmentStatusOnCarrier(id, currentStatus)
   )
@@ -29,6 +31,10 @@ class CarrierHomeDashboard extends Component {
     this.props.updateShipmentStatusOnCarrier(id, currentStatus)
   }
 
+  logLocation(shipment_id) {
+    this.props.logShipmentLocation(shipment_id)
+  }
+
   render() {
     const shipmentListArray = this.props.shipmentList
     let shipmentCells = ""
@@ -43,7 +49,7 @@ class CarrierHomeDashboard extends Component {
           actionButton = <button onClick={this.updateShipmentStatus.bind(this, value.Key, value.Record.status)}>pickup</button>
         } else if (value.Record.status === "waiting for delivery") {
           actionButton = <div>
-            <button>log location</button><br/>
+            <button onClick={this.logLocation.bind(this, value.Key)}>log location</button><br/>
             <button onClick={this.updateShipmentStatus.bind(this, value.Key, value.Record.status)}>delivery</button>
           </div>
         } else {
