@@ -30,7 +30,18 @@ A bootstrap project for a common use case in Telco industry, which aims to share
 
 ### Supply Chain User Interface showcase (MVP2)
 
+#### Architecture Overview
 <img src='./docs/res/supply-chain-showcase-concept-diagram.png' width=760>
+
+#### Shipper Dashboard
+
+<img src='./docs/res/shipper-dashboard.png' width=760>
+
+#### Authority Dashboard
+<img src='./docs/res/authority-dashboard.png' width=760>
+
+#### Carrier Dashboard
+<img src='./docs/res/carrier-dashboard.png' width=760>
 
 ### Internal Benchmark Tool (MVP3)
 
