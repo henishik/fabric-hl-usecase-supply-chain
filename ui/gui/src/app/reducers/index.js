@@ -5,7 +5,9 @@ import {
   UPDATE_SHIPMENT_STATUS,
   FETCH_ALL_SHIPMENT_LIST_ON_SHIPPER,
   UPDATE_SHIPMENT_STATUS_ON_SHIPPER,
-  LOG_SHIPMENT_LOCATION
+  LOG_SHIPMENT_LOCATION,
+  AUTHORIZE_TRANSACTION,
+  MAKE_PAYMENT
 } from '../action';
 
 // import {combineReducers} from 'redux-immutable';
@@ -18,6 +20,8 @@ const {routerReducer} = require('react-router-redux');
 
 function shipperReducer(state = {}, action) {
   switch (action.type) {
+    case MAKE_PAYMENT:
+      return state
     case UPDATE_SHIPMENT_STATUS_ON_SHIPPER:
       return state
     case FETCH_ALL_SHIPMENT_LIST_ON_SHIPPER:
@@ -35,6 +39,8 @@ function shipperReducer(state = {}, action) {
 
 function shipmentListRegulator(state = {}, action) {
   switch (action.type) {
+    case AUTHORIZE_TRANSACTION:
+      return state
     case RECIEVE_INITIAL_DATA:
       return {
         shipmentList: action.data

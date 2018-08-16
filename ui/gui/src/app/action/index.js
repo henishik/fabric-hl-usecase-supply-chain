@@ -11,6 +11,16 @@ export const assignCarrier = (target_shipment_id) => dispatch => {
   }));
 };
 
+export const AUTHORIZE_TRANSACTION = 'AUTHORIZE_TRANSACTION';
+export const authorizeTransaction = (target_shipment_id, current_status) => dispatch => {
+  fetch('http://localhost:9998/api/shipment/status/update/' + target_shipment_id + '/' + current_status)
+  .then(response => response.json())
+  .then(json => dispatch({
+    type: AUTHORIZE_TRANSACTION,
+    data: json
+  }));
+};
+
 export const UPDATE_SHIPMENT_STATUS_ON_SHIPPER = 'UPDATE_SHIPMENT_STATUS';
 export const updateShipmentStatusOnShipper = (target_shipment_id, current_status) => dispatch => {
   fetch('http://localhost:9998/api/shipment/status/update/' + target_shipment_id + '/' + current_status)
@@ -30,6 +40,16 @@ export const updateShipmentStatusOnCarrier = (target_shipment_id, current_status
   .then(response => response.json())
   .then(json => dispatch({
     type: UPDATE_SHIPMENT_STATUS,
+    data: json
+  }));
+};
+
+export const MAKE_PAYMENT = 'MAKE_PAYMENT';
+export const makePayment = (target_shipment_id, current_shipment_status) => dispatch => {
+  fetch('http://localhost:9998/api/shipment/status/update/' + target_shipment_id + '/' + current_shipment_status)
+  .then(response => response.json())
+  .then(json => dispatch({
+    type: MAKE_PAYMENT,
     data: json
   }));
 };

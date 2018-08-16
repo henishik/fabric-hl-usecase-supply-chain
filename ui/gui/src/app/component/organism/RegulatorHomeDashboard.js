@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {fetchInitialData} from '../../action';
 import {assignCarrier} from '../../action';
+import {authorizeTransaction} from '../../action';
 
 function mapStateToProps(state) {
   return {
@@ -10,7 +11,9 @@ function mapStateToProps(state) {
 }
 const mapDispatchToProps = (dispatch, ownProps) => ({
   fetchInitialData: () => dispatch(fetchInitialData()),
-  assignCarrier: (target_shipment_id) => dispatch(assignCarrier(target_shipment_id))
+  assignCarrier: (target_shipment_id) => dispatch(assignCarrier(target_shipment_id)),
+  authorizeTransaction: (target_shipment_id, current_shipment_status) => dispatch(
+    authorizeTransaction(target_shipment_id, current_shipment_status))
 });
 
 class RegulatorHomeDashboard extends Component {
@@ -21,6 +24,10 @@ class RegulatorHomeDashboard extends Component {
 
   onAssignCarrier(target_shipment_id) {
     this.props.assignCarrier(target_shipment_id);
+  }
+
+  onAuthorizeTransaction(target_shipment_id, current_shipment_status) {
+    this.props.authorizeTransaction(target_shipment_id, current_shipment_status);
   }
 
   componentDidMount() {
@@ -47,6 +54,12 @@ class RegulatorHomeDashboard extends Component {
               value.Record.carrierId:
               <button onClick={this.onAssignCarrier.bind(this, value.Key)}>Assing carrier</button>}
             </td>
+            <td>
+            {value.Record.status === "waiting for authority approval"?
+              <button onClick={this.onAuthorizeTransaction.bind(this, value.Key, value.Record.status)}>
+                Authorize Transaction
+              </button> : "-"}
+            </td>
           </tr>
         )
       })
@@ -67,6 +80,7 @@ class RegulatorHomeDashboard extends Component {
             <td>lognitude</td>
             <td>shipper</td>
             <td>carrier</td>
+            <td>action</td>
           </tr>
           {shipmentCells}
         </table>

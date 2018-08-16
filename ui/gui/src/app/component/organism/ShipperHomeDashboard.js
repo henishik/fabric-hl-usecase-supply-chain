@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {createShipment} from '../../action';
 import {fetchAllShipmentListOnShipper} from '../../action';
 import {updateShipmentStatusOnShipper} from '../../action';
+import {makePayment} from '../../action';
 
 function mapStateToProps(state) {
   return {
@@ -13,6 +14,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   createShipment: () => dispatch(createShipment()),
   fetchAllShipmentListOnShipper: (shipper_id) => dispatch(fetchAllShipmentListOnShipper(shipper_id)),
   updateShipmentStatus: (id, currentStatus) => dispatch(updateShipmentStatusOnShipper(id, currentStatus)),
+  makePayment: (id, currentStatus) => dispatch(makePayment(id, currentStatus)),
 });
 
 class ShipperHomeDashboard extends Component {
@@ -23,6 +25,10 @@ class ShipperHomeDashboard extends Component {
 
   onCreateShipment() {
     this.props.createShipment();
+  }
+
+  onMakePayment(shipment_id, current_shipment_status) {
+    this.props.makePayment(shipment_id, current_shipment_status);
   }
 
   updateShipmentStatus(id, currentStatus) {
@@ -47,7 +53,7 @@ class ShipperHomeDashboard extends Component {
         if (value.Record.status === "waiting for confirm POD") {
           actionButton = <button onClick={this.updateShipmentStatus.bind(this, value.Key, value.Record.status)}>Confirm POD</button>
         } else if (value.Record.status === "waiting for payment") {
-          actionButton = <button>Payment</button>
+          actionButton = <button onClick={this.onMakePayment.bind(this, value.Key, value.Record.status)}>Payment</button>
         }
 
         return (
