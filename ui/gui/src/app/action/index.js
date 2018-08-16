@@ -74,3 +74,13 @@ export const fetchAllShipmentListOnCarrier = () => dispatch => {
     data: json
   }));
 };
+
+export const LOG_SHIPMENT_LOCATION = 'LOG_SHIPMENT_LOCATION';
+export const logShipmentLocation = (shipment_id) => dispatch => {
+  fetch('http://localhost:9998/api/location/log/' + shipment_id)
+  .then(response => response.json())
+  .then(json => dispatch({
+    type: LOG_SHIPMENT_LOCATION,
+    data: json
+  }));
+};

@@ -4,7 +4,8 @@ import {
   FETCH_ALL_SHIPMENT_LIST_ON_CARRIER,
   UPDATE_SHIPMENT_STATUS,
   FETCH_ALL_SHIPMENT_LIST_ON_SHIPPER,
-  UPDATE_SHIPMENT_STATUS_ON_SHIPPER
+  UPDATE_SHIPMENT_STATUS_ON_SHIPPER,
+  LOG_SHIPMENT_LOCATION
 } from '../action';
 
 // import {combineReducers} from 'redux-immutable';
@@ -45,6 +46,8 @@ function shipmentListRegulator(state = {}, action) {
 
 function shipmentListCarrier(state = {}, action) {
   switch (action.type) {
+    case LOG_SHIPMENT_LOCATION:
+      return state
     case FETCH_ALL_SHIPMENT_LIST_ON_CARRIER:
       return {
         shipmentList: action.data

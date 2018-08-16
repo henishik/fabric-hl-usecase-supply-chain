@@ -264,6 +264,42 @@
 	 }
 	 return shim.Success(queryResults)
  }
+
+ func (s *SmartContract) logLocationForShipment(stub shim.ChaincodeStubInterface, args []string) sc.Response {
+	if len(args) < 3 {
+		return shim.Error("Incorrect number of arguments. Expecting 3")
+	}
+
+	var location = Location{
+		LocationShipmentKey: "SHIPMENT318",
+		LocationShipmentIdentity: "",
+		Latitude: "50.000000",
+		Lognitude: "6.000000",
+		LocationDatetimeUtc: time.Now().UTC().String()}
+
+	locaitionAsBytes, _ := json.Marshal(location)
+
+	var keyid = random(10, 999)
+	stub.PutState("LOCATION"+strconv.Itoa(keyid), locaitionAsBytes)
+
+	return shim.Success(nil)
+}
+
+func (s *SmartContract) queryAllLocationsForShipment(stub shim.ChaincodeStubInterface, args []string) sc.Response {
+	if len(args) < 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+
+	// shipper_id := strings.ToLower(args[0])
+	queryString := fmt.Sprintf("{\"selector\":{\"locationShipmentKey\":\"%s\"}}", "SHIPMENT318")
+	queryResults, err := getQueryResultForQueryString(stub, queryString)
+
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	return shim.Success(queryResults)
+}
  
  func main() {
 	 // The main function is only relevant in unit test mode.
