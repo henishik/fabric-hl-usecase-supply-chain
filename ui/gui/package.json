@@ -60,7 +60,7 @@
     "install": "^0.12.1",
     "left-pad": "^1.1.0",
     "lodash": "^4.11.1",
-    "material-ui": "^0.17.0",
+    "material-ui": "^0.17.4",
     "moment": "^2.13.0",
     "normalize.css": "^4.0.0",
     "npm": "^6.3.0",

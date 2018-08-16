@@ -1,8 +1,16 @@
+// DATA
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {fetchAllShipmentListOnCarrier} from '../../action';
 import {updateShipmentStatusOnCarrier} from '../../action';
 import {logShipmentLocation} from '../../action';
+// UI
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Chip from '@material-ui/core/Chip';
 
 function mapStateToProps(state) {
   return {
@@ -42,33 +50,44 @@ class CarrierHomeDashboard extends Component {
       shipmentCells = shipmentListArray.map((value, key) => {
 
         let actionButton = ""
+        let chipColorStype = "default"
 
         if (value.Record.status === "waiting for carrier") {
           actionButton = <button onClick={this.updateShipmentStatus.bind(this, value.Key, value.Record.status)}>accept</button>
         } else if (value.Record.status === "waiting for pickup") {
+          chipColorStype = "secondary"
           actionButton = <button onClick={this.updateShipmentStatus.bind(this, value.Key, value.Record.status)}>pickup</button>
         } else if (value.Record.status === "waiting for delivery") {
+          chipColorStype = "secondary"
           actionButton = <div>
             <button onClick={this.logLocation.bind(this, value.Key)}>log location</button><br/>
             <button onClick={this.updateShipmentStatus.bind(this, value.Key, value.Record.status)}>delivery</button>
           </div>
+        } else if (value.Record.status === "waiting for confirm POD") {
+          chipColorStype = "secondary"
+        } else if (value.Record.status === "waiting for authority approval") {
+          chipColorStype = "secondary"
+        } else if (value.Record.status === "waiting for payment") {
+          chipColorStype = "secondary"
+        } else if (value.Record.status === "TRANSACTION DONE") {
+          chipColorStype = "primary"
         } else {
           actionButton = <p>-</p>
         }
 
         return (
-          <tr>
-            <td>{value.Key}</td>
-            <td>{value.Record.identity}</td>
-            <td>{value.Record.name}</td>
-            <td>{value.Record.status}</td>
-            <td>{value.Record.value}</td>
-            <td>{value.Record.latitude}</td>
-            <td>{value.Record.lognitude}</td>
-            <td>{value.Record.shipperId}</td>
-            <td>{value.Record.carrierId? value.Record.carrierId: <button>Assing carrier</button>}</td>
-            <td>{actionButton}</td>
-          </tr>
+          <TableRow>
+            <TableCell>{value.Key}</TableCell>
+            <TableCell>{value.Record.identity}</TableCell>
+            <TableCell>{value.Record.name}</TableCell>
+            <TableCell><Chip label={value.Record.status} color={chipColorStype}></Chip></TableCell>
+            <TableCell>{value.Record.value}</TableCell>
+            <TableCell>{value.Record.latitude}</TableCell>
+            <TableCell>{value.Record.lognitude}</TableCell>
+            <TableCell>{value.Record.shipperId}</TableCell>
+            <TableCell>{value.Record.carrierId? value.Record.carrierId: <button>Assing carrier</button>}</TableCell>
+            <TableCell>{actionButton}</TableCell>
+          </TableRow>
         )
       })
     }
@@ -76,21 +95,25 @@ class CarrierHomeDashboard extends Component {
     return (
       <div classname="scdemo">
         <h1>carrier home dashboard</h1>
-        <table>
-          <tr>
-            <td>ledger key</td>
-            <td>shipment identity</td>
-            <td>shipment name</td>
-            <td>status</td>
-            <td>value</td>
-            <td>latitude</td>
-            <td>lognitude</td>
-            <td>shipper</td>
-            <td>carrier</td>
-            <td>action</td>
-          </tr>
-          {shipmentCells}
-        </table>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>ledger key</TableCell>
+              <TableCell>shipment identity</TableCell>
+              <TableCell>shipment name</TableCell>
+              <TableCell>status</TableCell>
+              <TableCell>value</TableCell>
+              <TableCell>latitude</TableCell>
+              <TableCell>lognitude</TableCell>
+              <TableCell>shipper</TableCell>
+              <TableCell>carrier</TableCell>
+              <TableCell>action</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {shipmentCells}
+          </TableBody>
+        </Table>
       </div>
     );
   }

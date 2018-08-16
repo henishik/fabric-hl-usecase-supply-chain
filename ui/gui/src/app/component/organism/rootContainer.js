@@ -15,6 +15,9 @@ class rootContainer extends Component {
   render() {
     return (
       <div className="rootContainer">
+        <div className="rootContainer__sidebar">
+          <h2 className="rootContainer__sidebar__title">Supply Chain Distributed Shipment Management (Fabric Hyperledger)</h2>
+        </div>
         <div className="rootContainer__main">
           {this.props.children}
         </div>
