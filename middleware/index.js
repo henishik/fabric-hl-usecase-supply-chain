@@ -884,7 +884,7 @@ router.get('/list/shipment', function(req, res) {
   var util = require('util');
   var os = require('os');
   var fabric_client = new Fabric_Client();
-  var channel = fabric_client.newChannel('mychannel');
+  var channel = fabric_client.newChannel('turktelecomechannel');
   var peer = fabric_client.newPeer('grpc://localhost:7051');
   channel.addPeer(peer);
   var member_user = null;
@@ -919,7 +919,7 @@ router.get('/list/shipment', function(req, res) {
   	// queryAllCars chaincode function - requires no arguments , ex: args: [''],
   	const request = {
   		//targets : --- letting this default to the peers assigned to the channel
-  		chaincodeId: 'fabcar',
+  		chaincodeId: 'mycc',
   		fcn: 'queryAllShipments',
   		args: ['']
   	};
