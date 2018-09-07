@@ -18,6 +18,22 @@ networks:
   byfn:
 
 services:
+  ca.example.com:
+    image: hyperledger/fabric-ca
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca.example.com
+      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.turktelekom.com-cert.pem
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/39ac72643fe7c559eb31a91e13a91fcaffc57f753c48d4f4e13faa146767e8a4_sk
+      # C1_PRIVATE_KEY
+    ports:
+      - "7054:7054"
+    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/turktelekom.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca.example.com
+    networks:
+      - byfn
 
   orderer.ki-decentralized.de:
     extends:
@@ -75,21 +91,21 @@ services:
     networks:
       - byfn
 
-  caturktelekom:
-    image: hyperledger/fabric-ca
-    environment:
-      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-      - FABRIC_CA_SERVER_CA_NAME=caturktelekom
-      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.turktelekom.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/***CHANGE_TO_THE_PROPER_PRIVATE_KEY***
-    ports:
-      - "7054:7054"
-    command: sh -c 'fabric-ca-server start --config /etc/hyperledger/fabric-ca-server-config/ca_config.yaml -d -b admin:adminpw'
-    volumes:
-      - /Users/t.ish/Desktop/DLT-telco/code/dlt-fabric-use-case-telco/crypto-config/peerOrganizations/turktelekom.com/ca:/etc/hyperledger/fabric-ca-server-config
-    container_name: caturktelekom
-    networks:
-      - byfn
+  # caturktelekom:
+  #   image: hyperledger/fabric-ca
+  #   environment:
+  #     - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+  #     - FABRIC_CA_SERVER_CA_NAME=caturktelekom
+  #     - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.turktelekom.com-cert.pem
+  #     - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/12268a8918423c494629325c47e50466dd694f7000952c14e2cfda6a774bf418_sk
+  #   ports:
+  #     - "7054:7054"
+  #   command: sh -c 'fabric-ca-server start --config /etc/hyperledger/fabric-ca-server-config/ca_config.yaml -d -b admin:adminpw'
+  #   volumes:
+  #     - /Users/t.ish/Desktop/DLT-telco/code/dlt-fabric-use-case-telco/crypto-config/peerOrganizations/turktelekom.com/ca:/etc/hyperledger/fabric-ca-server-config
+  #   container_name: caturktelekom
+  #   networks:
+  #     - byfn
 
   cli:
     container_name: cli
@@ -118,6 +134,7 @@ services:
         - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
         - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
     depends_on:
+      # - orderer.ki-decentralized.de
       - orderer.ki-decentralized.de
       - peer0.turktelekom.com
       - peer1.turktelekom.com

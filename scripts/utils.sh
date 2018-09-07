@@ -1,14 +1,5 @@
-#
-# Copyright IBM Corp All Rights Reserved
-#
-# SPDX-License-Identifier: Apache-2.0
-#
-
-# This is a collection of bash functions used by different scripts
-
-
-# verify the result of the end-to-end test
 verifyResult () {
+  # verify the result of the end-to-end test
 	if [ $1 -ne 0 ] ; then
 		echo "!!!!!!!!!!!!!!! "$2" !!!!!!!!!!!!!!!!"
     echo "========= ERROR !!! FAILED to execute End-2-End Scenario ==========="
@@ -17,11 +8,11 @@ verifyResult () {
 	fi
 }
 
-# Set OrdererOrg.Admin globals
 setOrdererGlobals() {
-        CORE_PEER_LOCALMSPID="OrdererMSP"
-        CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem
-        CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/users/Admin@ki-decentralized.de/msp
+	# Set OrdererOrg.Admin globals
+  CORE_PEER_LOCALMSPID="OrdererMSP"
+  CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem
+  CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/users/Admin@ki-decentralized.de/msp
 }
 
 setGlobals () {
@@ -86,8 +77,8 @@ updateAnchorPeers() {
 	echo
 }
 
-## Sometimes Join takes time hence RETRY at least for 5 times
 joinChannelWithRetry () {
+  # Sometimes Join takes time hence RETRY at least for 5 times
 	PEER=$1
 	ORG=$2
 	setGlobals $PEER $ORG
@@ -197,9 +188,9 @@ chaincodeQuery () {
   fi
 }
 
-# fetchChannelConfig <channel_id> <output_json>
-# Writes the current channel config for a given channel to a JSON file
 fetchChannelConfig() {
+  # fetchChannelConfig <channel_id> <output_json>
+  # Writes the current channel config for a given channel to a JSON file
   CHANNEL=$1
   OUTPUT=$2
 

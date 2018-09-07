@@ -53,7 +53,7 @@ function networkUp () {
   # generate artifacts if they don't exist
   if [ ! -d "crypto-config" ]; then
     generateCerts
-    # replacePrivateKey
+    replacePrivateKey
     generateChannelArtifacts
   fi
 

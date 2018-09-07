@@ -146,9 +146,9 @@ peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile /o
 "orderers":[
 			{
 			"mspid": "OrdererMSP",
-			"server-hostname":"orderer.example.com",
+			"server-hostname":"orderer.ki-decentralized.de",
 			"requests":"grpcs://127.0.0.1:7050",
-			"tls_cacerts":"fabric-path/fabric-samples/first-network/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt"
+			"tls_cacerts":"fabric-path/fabric-samples/first-network/crypto-config/ordererOrganizations/example.com/orderers/orderer.ki-decentralized.de/tls/ca.crt"
 			}
 			],
 "keyValueStore": "/tmp/fabric-client-kvs",
