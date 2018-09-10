@@ -1,6 +1,12 @@
-# Fabric HL SupplyChain Usecase example
+# Global Tobacco Supply Chain Prototype
 
-A bootstrap project for a common use case in Telco industry, which aims to share their blacklist customer over across multiple organizations with aiming some private-data requirements. This activity is a part of [IDPP#22](https://github.kigroup.de/ki-decentralized/IDPPs/issues/22)
+A prototype repository for the global tobacco supply chain industrial start-up to pitch my idea for angel investors.
+
+## 
+
+## List of Potential Angel Investors
+
+...
 
 ## Project Overview
 
