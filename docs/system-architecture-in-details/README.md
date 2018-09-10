@@ -28,12 +28,12 @@ cryptogen generate --config=./crypto-config.yaml
 ### 1.2. Generate channel artifacts for each participant organizations
 
 ```
-configtxgen -profile TurkTelecomOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
+configtxgen -profile GlobalOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
 
-configtxgen -profile TurkTelecomeChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID $CHANNEL_NAME
-configtxgen -profile TurkTelecomeChannel -outputAnchorPeersUpdate ./channel-artifacts/RegulatorMSPanchors.tx -channelID $CHANNEL_NAME -asOrg RegulatorMSP
-configtxgen -profile TurkTelecomeChannel -outputAnchorPeersUpdate ./channel-artifacts/ShipperMSPanchors.tx -channelID $CHANNEL_NAME -asOrg ShipperMSP
-configtxgen -profile TurkTelecomeChannel -outputAnchorPeersUpdate ./channel-artifacts/CarrierMSPanchors.tx -channelID $CHANNEL_NAME -asOrg CarrierMSP
+configtxgen -profile GlobalLogisticsChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID $CHANNEL_NAME
+configtxgen -profile GlobalLogisticsChannel -outputAnchorPeersUpdate ./channel-artifacts/RegulatorMSPanchors.tx -channelID $CHANNEL_NAME -asOrg RegulatorMSP
+configtxgen -profile GlobalLogisticsChannel -outputAnchorPeersUpdate ./channel-artifacts/ShipperMSPanchors.tx -channelID $CHANNEL_NAME -asOrg ShipperMSP
+configtxgen -profile GlobalLogisticsChannel -outputAnchorPeersUpdate ./channel-artifacts/CarrierMSPanchors.tx -channelID $CHANNEL_NAME -asOrg CarrierMSP
 ```
 
 ## 2. Build Docker Containers (each peers, singleton orderer)

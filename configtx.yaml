@@ -2,7 +2,7 @@
 ---
 Profiles:
 
-    TurkTelecomOrdererGenesis:
+    GlobalOrdererGenesis:
         Capabilities:
             <<: *ChannelCapabilities
         Orderer:
@@ -12,19 +12,19 @@ Profiles:
             Capabilities:
                 <<: *OrdererCapabilities
         Consortiums:
-            TurkTelecomConsortium:
+            GlobalLogisticsConsortium:
                 Organizations:
-                    - *TurkTelecomOrg
-                    - *TurkcellOrg
-                    - *VodafoneOrg
-    TurkTelecomeChannel:
-        Consortium: TurkTelecomConsortium
+                    - *RegulatorOrg
+                    - *ShipperOrg
+                    - *CarrierOrg
+    GlobalLogisticsChannel:
+        Consortium: GlobalLogisticsConsortium
         Application:
             <<: *ApplicationDefaults
             Organizations:
-                - *TurkTelecomOrg
-                - *TurkcellOrg
-                - *VodafoneOrg
+                - *RegulatorOrg
+                - *ShipperOrg
+                - *CarrierOrg
             Capabilities:
                 <<: *ApplicationCapabilities
 
@@ -43,7 +43,7 @@ Organizations:
         # MSPDir is the filesystem path which contains the MSP configuration
         MSPDir: crypto-config/ordererOrganizations/ki-decentralized.de/msp
 
-    - &TurkTelecomOrg
+    - &RegulatorOrg
         # DefaultOrg defines the organization which is used in the sampleconfig
         # of the fabric.git development environment
         Name: RegulatorMSP
@@ -60,7 +60,7 @@ Organizations:
             - Host: peer0.regulator.com
               Port: 7051
 
-    - &TurkcellOrg
+    - &ShipperOrg
         Name: ShipperMSP
         ID: ShipperMSP
         MSPDir: crypto-config/peerOrganizations/shipper.com/msp
@@ -68,7 +68,7 @@ Organizations:
             - Host: peer0.shipper.com
               Port: 7051
 
-    - &VodafoneOrg
+    - &CarrierOrg
         Name: CarrierMSP
         ID: CarrierMSP
         MSPDir: crypto-config/peerOrganizations/carrier.com/msp

@@ -87,7 +87,7 @@ function generateChannelArtifacts() {
   # Note: For some unknown reason (at least for now) the block file can't be
   # named orderer.genesis.block or the orderer will fail to launch!
   set -x
-  configtxgen -profile TurkTelecomOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
+  configtxgen -profile GlobalOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
   res=$?
   set +x
   if [ $res -ne 0 ]; then
@@ -99,7 +99,7 @@ function generateChannelArtifacts() {
   echo "### Generating channel configuration transaction 'channel.tx' ###"
   echo "#################################################################"
   set -x
-  configtxgen -profile TurkTelecomeChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID $CHANNEL_NAME
+  configtxgen -profile GlobalLogisticsChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID $CHANNEL_NAME
   res=$?
   set +x
   if [ $res -ne 0 ]; then
@@ -112,7 +112,7 @@ function generateChannelArtifacts() {
   echo "#######    Generating anchor peer update for AuthorityMSP   ##########"
   echo "#################################################################"
   set -x
-  configtxgen -profile TurkTelecomeChannel -outputAnchorPeersUpdate \
+  configtxgen -profile GlobalLogisticsChannel -outputAnchorPeersUpdate \
   ./channel-artifacts/RegulatorMSPanchors.tx -channelID $CHANNEL_NAME -asOrg RegulatorMSP
   res=$?
   set +x
@@ -126,7 +126,7 @@ function generateChannelArtifacts() {
   echo "#######    Generating anchor peer update for ShipperOrg   ##########"
   echo "#################################################################"
   set -x
-  configtxgen -profile TurkTelecomeChannel -outputAnchorPeersUpdate \
+  configtxgen -profile GlobalLogisticsChannel -outputAnchorPeersUpdate \
   ./channel-artifacts/ShipperMSPanchors.tx -channelID $CHANNEL_NAME -asOrg ShipperMSP
   res=$?
   set +x
@@ -140,7 +140,7 @@ function generateChannelArtifacts() {
   echo "#######    Generating anchor peer update for CarrierOrg   ##########"
   echo "#################################################################"
   set -x
-  configtxgen -profile TurkTelecomeChannel -outputAnchorPeersUpdate \
+  configtxgen -profile GlobalLogisticsChannel -outputAnchorPeersUpdate \
   ./channel-artifacts/CarrierMSPanchors.tx -channelID $CHANNEL_NAME -asOrg CarrierMSP
   res=$?
   set +x

@@ -11,7 +11,7 @@ CORE_PEER_ADDRESS=peer0.regulator.com:7051
 CORE_PEER_TLS_ENABLED=true
 CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/regulator.com/users/Admin@regulator.com/msp
 CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/regulator.com/peers/peer0.regulator.com/tls/server.crt
-CORE_PEER_LOCALMSPID=TurkTelekomMSP
+CORE_PEER_LOCALMSPID=RegulatorMSP
 CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/regulator.com/peers/peer0.regulator.com/tls/ca.crt
 CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/regulator.com/peers/peer0.regulator.com/tls/server.key
 
