@@ -113,7 +113,7 @@ function generateChannelArtifacts() {
   echo "#################################################################"
   set -x
   configtxgen -profile TurkTelecomeChannel -outputAnchorPeersUpdate \
-  ./channel-artifacts/TurkTelekomMSPanchors.tx -channelID $CHANNEL_NAME -asOrg TurkTelekomMSP
+  ./channel-artifacts/RegulatorMSPanchors.tx -channelID $CHANNEL_NAME -asOrg RegulatorMSP
   res=$?
   set +x
   if [ $res -ne 0 ]; then
@@ -127,7 +127,7 @@ function generateChannelArtifacts() {
   echo "#################################################################"
   set -x
   configtxgen -profile TurkTelecomeChannel -outputAnchorPeersUpdate \
-  ./channel-artifacts/TurkcellMSPanchors.tx -channelID $CHANNEL_NAME -asOrg TurkcellMSP
+  ./channel-artifacts/ShipperMSPanchors.tx -channelID $CHANNEL_NAME -asOrg ShipperMSP
   res=$?
   set +x
   if [ $res -ne 0 ]; then
@@ -141,7 +141,7 @@ function generateChannelArtifacts() {
   echo "#################################################################"
   set -x
   configtxgen -profile TurkTelecomeChannel -outputAnchorPeersUpdate \
-  ./channel-artifacts/VodafoneMSPanchors.tx -channelID $CHANNEL_NAME -asOrg VodafoneMSP
+  ./channel-artifacts/CarrierMSPanchors.tx -channelID $CHANNEL_NAME -asOrg CarrierMSP
   res=$?
   set +x
   if [ $res -ne 0 ]; then

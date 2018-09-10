@@ -19,7 +19,7 @@ setGlobals () {
 	PEER=$1
 	ORG=$2
 	if [ $ORG -eq 1 ] ; then
-		CORE_PEER_LOCALMSPID="TurkTelekomMSP"
+		CORE_PEER_LOCALMSPID="RegulatorMSP"
 		CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/regulator.com/peers/peer0.regulator.com/tls/ca.crt
 		CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/regulator.com/users/Admin@regulator.com/msp
 		if [ $PEER -eq 0 ]; then
@@ -29,7 +29,7 @@ setGlobals () {
 		fi
 
 	elif [ $ORG -eq 2 ] ; then
-		CORE_PEER_LOCALMSPID="TurkcellMSP"
+		CORE_PEER_LOCALMSPID="ShipperMSP"
 		CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/shipper.com/peers/peer0.shipper.com/tls/ca.crt
 		CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/shipper.com/users/Admin@shipper.com/msp
 		if [ $PEER -eq 0 ]; then
@@ -39,7 +39,7 @@ setGlobals () {
 		fi
 
 	elif [ $ORG -eq 3 ] ; then
-		CORE_PEER_LOCALMSPID="VodafoneMSP"
+		CORE_PEER_LOCALMSPID="CarrierMSP"
 		CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/carrier.com/peers/peer0.carrier.com/tls/ca.crt
 		CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/carrier.com/users/Admin@carrier.com/msp
 		if [ $PEER -eq 0 ]; then
@@ -214,20 +214,20 @@ fetchChannelConfig() {
   set +x
 }
 
-# signConfigtxAsPeerOrg <org> <configtx.pb>
-# Set the peerOrg admin of an org and signing the config update
 signConfigtxAsPeerOrg() {
-        PEERORG=$1
-        TX=$2
-        setGlobals 0 $PEERORG
-        set -x
-        peer channel signconfigtx -f "${TX}"
-        set +x
+  # signConfigtxAsPeerOrg <org> <configtx.pb>
+  # Set the peerOrg admin of an org and signing the config update
+  PEERORG=$1
+  TX=$2
+  setGlobals 0 $PEERORG
+  set -x
+  peer channel signconfigtx -f "${TX}"
+  set +x
 }
 
-# createConfigUpdate <channel_id> <original_config.json> <modified_config.json> <output.pb>
-# Takes an original and modified config, and produces the config update tx which transitions between the two
 createConfigUpdate() {
+  # createConfigUpdate <channel_id> <original_config.json> <modified_config.json> <output.pb>
+  # Takes an original and modified config, and produces the config update tx which transitions between the two
   CHANNEL=$1
   ORIGINAL=$2
   MODIFIED=$3

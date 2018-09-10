@@ -36,7 +36,7 @@ services:
       - CORE_PEER_ADDRESS=peer0.regulator.com:7051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.regulator.com:7051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.regulator.com:7051
-      - CORE_PEER_LOCALMSPID=TurkTelekomMSP
+      - CORE_PEER_LOCALMSPID=RegulatorMSP
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb:5984
       # The CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME and CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
@@ -63,7 +63,7 @@ services:
       - CORE_PEER_ADDRESS=peer1.regulator.com:7051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.regulator.com:7051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.regulator.com:7051
-      - CORE_PEER_LOCALMSPID=TurkTelekomMSP
+      - CORE_PEER_LOCALMSPID=RegulatorMSP
     volumes:
         - /var/run/:/host/var/run/
         - ../crypto-config/peerOrganizations/regulator.com/peers/peer1.regulator.com/msp:/etc/hyperledger/fabric/msp
@@ -84,7 +84,7 @@ services:
       - CORE_PEER_ADDRESS=peer0.shipper.com:7051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.shipper.com:7051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.shipper.com:7051
-      - CORE_PEER_LOCALMSPID=TurkcellMSP
+      - CORE_PEER_LOCALMSPID=ShipperMSP
     volumes:
         - /var/run/:/host/var/run/
         - ../crypto-config/peerOrganizations/shipper.com/peers/peer0.shipper.com/msp:/etc/hyperledger/fabric/msp
@@ -104,7 +104,7 @@ services:
       - CORE_PEER_ADDRESS=peer1.shipper.com:7051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.shipper.com:7051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.shipper.com:7051
-      - CORE_PEER_LOCALMSPID=TurkcellMSP
+      - CORE_PEER_LOCALMSPID=ShipperMSP
     volumes:
         - /var/run/:/host/var/run/
         - ../crypto-config/peerOrganizations/shipper.com/peers/peer1.shipper.com/msp:/etc/hyperledger/fabric/msp
@@ -124,7 +124,7 @@ services:
       - CORE_PEER_ADDRESS=peer0.carrier.com:7051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.carrier.com:7051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.carrier.com:7051
-      - CORE_PEER_LOCALMSPID=VodafoneMSP
+      - CORE_PEER_LOCALMSPID=CarrierMSP
     volumes:
         - /var/run/:/host/var/run/
         - ../crypto-config/peerOrganizations/carrier.com/peers/peer0.carrier.com/msp:/etc/hyperledger/fabric/msp
@@ -144,7 +144,7 @@ services:
       - CORE_PEER_ADDRESS=peer1.carrier.com:7051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.carrier.com:7051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.carrier.com:7051
-      - CORE_PEER_LOCALMSPID=VodafoneMSP
+      - CORE_PEER_LOCALMSPID=CarrierMSP
     volumes:
         - /var/run/:/host/var/run/
         - ../crypto-config/peerOrganizations/carrier.com/peers/peer1.carrier.com/msp:/etc/hyperledger/fabric/msp

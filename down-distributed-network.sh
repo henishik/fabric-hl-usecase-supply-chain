@@ -7,10 +7,10 @@ function clearContainers () {
   fi
 }
 
-# Delete any images that were generated as a part of this setup
-# specifically the following images are often left behind:
-# TODO list generated image naming patterns
 function removeUnwantedImages() {
+  # Delete any images that were generated as a part of this setup
+  # specifically the following images are often left behind:
+  # TODO list generated image naming patterns
   DOCKER_IMAGE_IDS=$(docker images | grep "dev\|none\|test-vp\|peer[0-9]-" | awk '{print $3}')
   if [ -z "$DOCKER_IMAGE_IDS" -o "$DOCKER_IMAGE_IDS" == " " ]; then
     echo "---- No images available for deletion ----"
@@ -22,6 +22,7 @@ function removeUnwantedImages() {
 function networkDown () {
   docker-compose -f $COMPOSE_FILE -f $COMPOSE_FILE_COUCH down --volumes
   docker-compose -f $COMPOSE_FILE down --volumes
+
   # Don't remove the generated artifacts -- note, the ledgers are always removed
   if [ "$MODE" != "restart" ]; then
     # Bring down the network, deleting the volumes
