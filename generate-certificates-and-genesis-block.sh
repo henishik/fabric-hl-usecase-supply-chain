@@ -161,7 +161,7 @@ CLI_TIMEOUT=10
 # default for delay between commands
 CLI_DELAY=3
 # channel name defaults to "mychannel"
-CHANNEL_NAME="turktelecomechannel"
+CHANNEL_NAME="global-common-channel-layer"
 # use this as the default docker-compose yaml definition
 COMPOSE_FILE=docker-compose-cli.yaml
 #

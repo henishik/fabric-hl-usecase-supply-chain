@@ -13,7 +13,7 @@ OrdererOrgs:
 
 PeerOrgs:
   # "PeerOrgs" - Definition of organizations managing peer nodes
-  - Name: TurkTelekom 
+  - Name: Regulator 
     Domain: regulator.com
     EnableNodeOUs: true
     Template:
@@ -28,7 +28,7 @@ PeerOrgs:
     Users:
       Count: 1
 
-  - Name: Turkcell
+  - Name: Shipper
     Domain: shipper.com
     EnableNodeOUs: true
     Template:
@@ -36,7 +36,7 @@ PeerOrgs:
     Users:
       Count: 1
 
-  - Name: Vodafone
+  - Name: Carrier
     Domain: carrier.com
     EnableNodeOUs: true
     Template:
