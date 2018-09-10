@@ -93,7 +93,7 @@ installChaincode 0 3
 # Instantiate chaincode on peer0.Shipper
 echo "Instantiating chaincode on peer0.Shipper..."
 instantiateChaincode 0 1
-instantiateChaincode 0 2
+# instantiateChaincode 0 2
 # instantiateChaincode 0 3 SOME HOW GET AN ERROR WHEN INSTANTIATE ON PEER3
 
 echo

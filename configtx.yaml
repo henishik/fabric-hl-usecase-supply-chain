@@ -71,13 +71,13 @@ Organizations:
         # ID to load the MSP definition as
         ID: TurkTelekomMSP
 
-        MSPDir: crypto-config/peerOrganizations/turktelekom.com/msp
+        MSPDir: crypto-config/peerOrganizations/regulator.com/msp
 
         AnchorPeers:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0.turktelekom.com
+            - Host: peer0.regulator.com
               Port: 7051
 
     - &TurkcellOrg
@@ -88,13 +88,13 @@ Organizations:
         # ID to load the MSP definition as
         ID: TurkcellMSP
 
-        MSPDir: crypto-config/peerOrganizations/turkcell.com/msp
+        MSPDir: crypto-config/peerOrganizations/shipper.com/msp
 
         AnchorPeers:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0.turkcell.com
+            - Host: peer0.shipper.com
               Port: 7051
 
     - &VodafoneOrg
@@ -105,13 +105,13 @@ Organizations:
         # ID to load the MSP definition as
         ID: VodafoneMSP
 
-        MSPDir: crypto-config/peerOrganizations/vodafone.com/msp
+        MSPDir: crypto-config/peerOrganizations/carrier.com/msp
 
         AnchorPeers:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0.vodafone.com
+            - Host: peer0.carrier.com
               Port: 7051
 
 ################################################################################

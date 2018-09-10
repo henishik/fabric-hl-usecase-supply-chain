@@ -51,17 +51,17 @@ function replacePrivateKey () {
   # The next steps will replace the template's contents with the
   # actual values of the private key file names for the two CAs.
   CURRENT_DIR=$PWD
-  cd crypto-config/peerOrganizations/turktelekom.com/ca/
+  cd crypto-config/peerOrganizations/regulator.com/ca/
   PRIV_KEY=$(ls *_sk)
   cd "$CURRENT_DIR"
   sed $OPTS "" "s/CA_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose.yaml
 
-  cd crypto-config/peerOrganizations/turkcell.com/ca/
+  cd crypto-config/peerOrganizations/shipper.com/ca/
   PRIV_KEY=$(ls *_sk)
   cd "$CURRENT_DIR"
   sed $OPTS "" "s/CA2_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose.yaml
 
-  cd crypto-config/peerOrganizations/vodafone.com/ca/
+  cd crypto-config/peerOrganizations/carrier.com/ca/
   PRIV_KEY=$(ls *_sk)
   cd "$CURRENT_DIR"
   sed $OPTS "" "s/CA2_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose.yaml
