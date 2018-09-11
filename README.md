@@ -2,6 +2,27 @@
 
 A prototype repository for the global tobacco supply chain industrial start-up to pitch my idea for angel investors.
 
+## The Minimum Detailed Scenario
+
+1. Seed Producer in Norway generates x grams of seeds
+2. Authority moves(purchase) y amount of seeds from seed producer
+3. Road carrier carries the seed from seed producer to port in Norway
+4. Export authority in Norway authorizes the seeds to export
+5. Oversea carrier carries the seed from a port in Norway to a port in Brazil
+6. Import authority in Brazil authorizes the seeds to import
+7. Road carrier carries the seed from a port to firmer
+8. Firmer confirms the seed to get
+
+## The minimum functionalities
+
+* Identify seed providor
+* Identify production company
+* Identify export authority
+* Identify import authority
+* Identify road carrier
+* Identify oversea carrier
+* Identify firmer
+
 ## A Usecase Scenario
 
 * Authority wants to check which firmer bought which seeds from which seed provider
@@ -39,9 +60,6 @@ A prototype repository for the global tobacco supply chain industrial start-up t
   * Oversea Carrier
 * Consumers
 
-## Core Functionalities
-
-...
 
 ## List of Potential Angel Investors
 
