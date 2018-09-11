@@ -51,17 +51,17 @@ function replacePrivateKey () {
   # The next steps will replace the template's contents with the
   # actual values of the private key file names for the two CAs.
   CURRENT_DIR=$PWD
-  cd crypto-config/peerOrganizations/turktelekom.com/ca/
+  cd crypto-config/peerOrganizations/regulator.com/ca/
   PRIV_KEY=$(ls *_sk)
   cd "$CURRENT_DIR"
   sed $OPTS "" "s/CA_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose.yaml
 
-  cd crypto-config/peerOrganizations/turkcell.com/ca/
+  cd crypto-config/peerOrganizations/shipper.com/ca/
   PRIV_KEY=$(ls *_sk)
   cd "$CURRENT_DIR"
   sed $OPTS "" "s/CA2_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose.yaml
 
-  cd crypto-config/peerOrganizations/vodafone.com/ca/
+  cd crypto-config/peerOrganizations/carrier.com/ca/
   PRIV_KEY=$(ls *_sk)
   cd "$CURRENT_DIR"
   sed $OPTS "" "s/CA2_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose.yaml
@@ -87,7 +87,7 @@ function generateChannelArtifacts() {
   # Note: For some unknown reason (at least for now) the block file can't be
   # named orderer.genesis.block or the orderer will fail to launch!
   set -x
-  configtxgen -profile TurkTelecomOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
+  configtxgen -profile GlobalOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
   res=$?
   set +x
   if [ $res -ne 0 ]; then
@@ -99,7 +99,7 @@ function generateChannelArtifacts() {
   echo "### Generating channel configuration transaction 'channel.tx' ###"
   echo "#################################################################"
   set -x
-  configtxgen -profile TurkTelecomeChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID $CHANNEL_NAME
+  configtxgen -profile GlobalLogisticsChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID $CHANNEL_NAME
   res=$?
   set +x
   if [ $res -ne 0 ]; then
@@ -112,8 +112,8 @@ function generateChannelArtifacts() {
   echo "#######    Generating anchor peer update for AuthorityMSP   ##########"
   echo "#################################################################"
   set -x
-  configtxgen -profile TurkTelecomeChannel -outputAnchorPeersUpdate \
-  ./channel-artifacts/TurkTelekomMSPanchors.tx -channelID $CHANNEL_NAME -asOrg TurkTelekomMSP
+  configtxgen -profile GlobalLogisticsChannel -outputAnchorPeersUpdate \
+  ./channel-artifacts/RegulatorMSPanchors.tx -channelID $CHANNEL_NAME -asOrg RegulatorMSP
   res=$?
   set +x
   if [ $res -ne 0 ]; then
@@ -126,8 +126,8 @@ function generateChannelArtifacts() {
   echo "#######    Generating anchor peer update for ShipperOrg   ##########"
   echo "#################################################################"
   set -x
-  configtxgen -profile TurkTelecomeChannel -outputAnchorPeersUpdate \
-  ./channel-artifacts/TurkcellMSPanchors.tx -channelID $CHANNEL_NAME -asOrg TurkcellMSP
+  configtxgen -profile GlobalLogisticsChannel -outputAnchorPeersUpdate \
+  ./channel-artifacts/ShipperMSPanchors.tx -channelID $CHANNEL_NAME -asOrg ShipperMSP
   res=$?
   set +x
   if [ $res -ne 0 ]; then
@@ -140,8 +140,8 @@ function generateChannelArtifacts() {
   echo "#######    Generating anchor peer update for CarrierOrg   ##########"
   echo "#################################################################"
   set -x
-  configtxgen -profile TurkTelecomeChannel -outputAnchorPeersUpdate \
-  ./channel-artifacts/VodafoneMSPanchors.tx -channelID $CHANNEL_NAME -asOrg VodafoneMSP
+  configtxgen -profile GlobalLogisticsChannel -outputAnchorPeersUpdate \
+  ./channel-artifacts/CarrierMSPanchors.tx -channelID $CHANNEL_NAME -asOrg CarrierMSP
   res=$?
   set +x
   if [ $res -ne 0 ]; then
@@ -161,7 +161,7 @@ CLI_TIMEOUT=10
 # default for delay between commands
 CLI_DELAY=3
 # channel name defaults to "mychannel"
-CHANNEL_NAME="turktelecomechannel"
+CHANNEL_NAME="global-common-channel-layer"
 # use this as the default docker-compose yaml definition
 COMPOSE_FILE=docker-compose-cli.yaml
 #

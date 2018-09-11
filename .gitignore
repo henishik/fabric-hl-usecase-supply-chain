@@ -18,3 +18,5 @@ first-network/channel-artifacts/*
 .vscode
 log.log
 middleware/hfc-key-store/
+middleware/package-lock.json
+ui/gui/package-lock.json

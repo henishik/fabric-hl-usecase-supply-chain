@@ -22,7 +22,7 @@ router.get('/shipment/status/update/:id/:current_status', function(req, res) {
   var util = require('util');
   var os = require('os');
   var fabric_client = new Fabric_Client();
-  var channel = fabric_client.newChannel('mychannel');
+  var channel = fabric_client.newChannel('global-common-channel-layer');
   var peer = fabric_client.newPeer('grpc://localhost:7051');
   channel.addPeer(peer);
 	var order = fabric_client.newOrderer('grpc://localhost:7050')
@@ -81,10 +81,10 @@ router.get('/shipment/status/update/:id/:current_status', function(req, res) {
 		// must send the proposal to endorsing peers
 		var request = {
 			//targets: let default to the peer assigned to the client
-			chaincodeId: 'fabcar',
+			chaincodeId: 'mycc',
 			fcn: 'updateShipmentStatus',
 			args: [target_shipment_id+'', nextStatusString],
-			chainId: 'mychannel',
+			chainId: 'global-common-channel-layer',
 			txId: tx_id
 		};
 	
@@ -196,7 +196,7 @@ router.get('/shipment/assigncarrier/:id', function(req, res) {
   var util = require('util');
   var os = require('os');
   var fabric_client = new Fabric_Client();
-  var channel = fabric_client.newChannel('mychannel');
+  var channel = fabric_client.newChannel('global-common-channel-layer');
   var peer = fabric_client.newPeer('grpc://localhost:7051');
   channel.addPeer(peer);
 	var order = fabric_client.newOrderer('grpc://localhost:7050')
@@ -238,10 +238,10 @@ router.get('/shipment/assigncarrier/:id', function(req, res) {
 		// must send the proposal to endorsing peers
 		var request = {
 			//targets: let default to the peer assigned to the client
-			chaincodeId: 'fabcar',
+			chaincodeId: 'mycc',
 			fcn: 'assignCarrier',
 			args: [target_shipment_id+''],
-			chainId: 'mychannel',
+			chainId: 'global-common-channel-layer',
 			txId: tx_id
 		};
 	
@@ -352,7 +352,7 @@ router.get('/shipment/create', function(req, res) {
   var util = require('util');
   var os = require('os');
   var fabric_client = new Fabric_Client();
-  var channel = fabric_client.newChannel('mychannel');
+  var channel = fabric_client.newChannel('global-common-channel-layer');
   var peer = fabric_client.newPeer('grpc://localhost:7051');
   channel.addPeer(peer);
 	var order = fabric_client.newOrderer('grpc://localhost:7050')
@@ -392,10 +392,10 @@ router.get('/shipment/create', function(req, res) {
 		// must send the proposal to endorsing peers
 		var request = {
 			//targets: let default to the peer assigned to the client
-			chaincodeId: 'fabcar',
+			chaincodeId: 'mycc',
 			fcn: 'createShipment',
 			args: [''],
-			chainId: 'mychannel',
+			chainId: 'global-common-channel-layer',
 			txId: tx_id
 		};
 	
@@ -506,7 +506,7 @@ router.get('/shipment/list/shipper/:id', function(req, res) {
   var util = require('util');
   var os = require('os');
   var fabric_client = new Fabric_Client();
-  var channel = fabric_client.newChannel('mychannel');
+  var channel = fabric_client.newChannel('global-common-channel-layer');
   var peer = fabric_client.newPeer('grpc://localhost:7051');
   channel.addPeer(peer);
   var member_user = null;
@@ -541,7 +541,7 @@ router.get('/shipment/list/shipper/:id', function(req, res) {
   	// queryAllCars chaincode function - requires no arguments , ex: args: [''],
   	const request = {
   		//targets : --- letting this default to the peers assigned to the channel
-  		chaincodeId: 'fabcar',
+  		chaincodeId: 'mycc',
   		fcn: 'queryShipmentsByShipperId',
   		args: [shipper_id+'']
   	};
@@ -581,7 +581,7 @@ router.get('/location/log/:shipment_id', function(req, res) {
   var util = require('util');
   var os = require('os');
   var fabric_client = new Fabric_Client();
-  var channel = fabric_client.newChannel('mychannel');
+  var channel = fabric_client.newChannel('global-common-channel-layer');
   var peer = fabric_client.newPeer('grpc://localhost:7051');
   channel.addPeer(peer);
 	var order = fabric_client.newOrderer('grpc://localhost:7050')
@@ -622,10 +622,10 @@ router.get('/location/log/:shipment_id', function(req, res) {
 		// must send the proposal to endorsing peers
 		var request = {
 			//targets: let default to the peer assigned to the client
-			chaincodeId: 'fabcar',
+			chaincodeId: 'mycc',
 			fcn: 'logLocationForShipment',
 			args: ['1', '1', '1'],
-			chainId: 'mychannel',
+			chainId: 'global-common-channel-layer',
 			txId: tx_id
 		};
 	
@@ -739,7 +739,7 @@ router.get('/location/get/:shipmentKey', function(req, res) {
   var util = require('util');
   var os = require('os');
   var fabric_client = new Fabric_Client();
-  var channel = fabric_client.newChannel('mychannel');
+  var channel = fabric_client.newChannel('global-common-channel-layer');
   var peer = fabric_client.newPeer('grpc://localhost:7051');
   channel.addPeer(peer);
   var member_user = null;
@@ -773,7 +773,7 @@ router.get('/location/get/:shipmentKey', function(req, res) {
   	// queryAllCars chaincode function - requires no arguments , ex: args: [''],
   	const request = {
   		//targets : --- letting this default to the peers assigned to the channel
-  		chaincodeId: 'fabcar',
+  		chaincodeId: 'mycc',
   		fcn: 'queryAllLocationsForShipment',
   		args: ['1']
   	};
@@ -813,7 +813,7 @@ router.get('/shipment/list/carrier', function(req, res) {
   var util = require('util');
   var os = require('os');
   var fabric_client = new Fabric_Client();
-  var channel = fabric_client.newChannel('mychannel');
+  var channel = fabric_client.newChannel('global-common-channel-layer');
   var peer = fabric_client.newPeer('grpc://localhost:7051');
   channel.addPeer(peer);
   var member_user = null;
@@ -847,7 +847,7 @@ router.get('/shipment/list/carrier', function(req, res) {
   	// queryAllCars chaincode function - requires no arguments , ex: args: [''],
   	const request = {
   		//targets : --- letting this default to the peers assigned to the channel
-  		chaincodeId: 'fabcar',
+  		chaincodeId: 'mycc',
   		fcn: 'queryShipmentsByCarrierId',
   		args: ['carrier_id_921']
   	};
@@ -884,7 +884,7 @@ router.get('/list/shipment', function(req, res) {
   var util = require('util');
   var os = require('os');
   var fabric_client = new Fabric_Client();
-  var channel = fabric_client.newChannel('turktelecomechannel');
+  var channel = fabric_client.newChannel('global-common-channel-layer');
   var peer = fabric_client.newPeer('grpc://localhost:7051');
   channel.addPeer(peer);
   var member_user = null;

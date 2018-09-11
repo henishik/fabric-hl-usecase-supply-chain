@@ -17,7 +17,7 @@ var os = require('os');
 var fabric_client = new Fabric_Client();
 
 // setup the fabric network
-var channel = fabric_client.newChannel('turktelecomechannel');
+var channel = fabric_client.newChannel('global-common-channel-layer');
 var peer = fabric_client.newPeer('grpc://localhost:7051');
 channel.addPeer(peer);
 var order = fabric_client.newOrderer('grpc://localhost:7050')
@@ -63,7 +63,7 @@ Fabric_Client.newDefaultKeyValueStore({ path: store_path
 		chaincodeId: 'mycc',
 		fcn: 'queryAllShipments',
 		args: [''],
-		chainId: 'turktelecomechannel',
+		chainId: 'global-common-channel-layer',
 		txId: tx_id
 	};
 

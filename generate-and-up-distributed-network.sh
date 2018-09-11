@@ -1,22 +1,15 @@
 #
 #!/bin/bash
 #
-# Copyright KI decentralized GmbH All Rights Reserved
-#
-# SPDX-License-Identifier: Apache-2.0
-#
 
-# prepending $PWD/../bin to PATH to ensure we are picking up the correct binaries
-# this may be commented out to resolve installed version of tools if desired
 export FABRIC_CFG_PATH=${PWD}
-
 # Import Generate certificates and genesis block function 
 . generate-certificates-and-genesis-block.sh
 
-# Do some basic sanity checking to make sure that the appropriate versions of fabric
-# binaries/images are available.  In the future, additional checking for the presence
-# of go or other items could be added.
 function checkPrereqs() {
+  # Do some basic sanity checking to make sure that the appropriate versions of fabric
+  # binaries/images are available.  In the future, additional checking for the presence
+  # of go or other items could be added.
   # Note, we check configtxlator externally because it does not require a config file, and peer in the
   # docker image because of FAB-8551 that makes configtxlator return 'development version' in docker
   LOCAL_VERSION=$(configtxlator version | sed -ne 's/ Version: //p')
@@ -47,10 +40,10 @@ function checkPrereqs() {
   done
 }
 
-# Generate the needed certificates, the genesis block and start the network.
 function networkUp () {
+  # Generate the needed certificates, the genesis block and start the network.
   checkPrereqs
-  # generate artifacts if they don't exist
+
   if [ ! -d "crypto-config" ]; then
     generateCerts
     replacePrivateKey
@@ -67,7 +60,6 @@ function networkUp () {
     exit 1
   fi
 
-  # now run the end to end script
   docker exec cli scripts/script.sh $CHANNEL_NAME $CLI_DELAY $LANGUAGE $CLI_TIMEOUT
 
   if [ $? -ne 0 ]; then
@@ -85,7 +77,7 @@ CLI_TIMEOUT=10
 # default for delay between commands
 CLI_DELAY=3
 # channel name defaults to "mychannel"
-CHANNEL_NAME="turktelecomechannel"
+CHANNEL_NAME="global-common-channel-layer"
 # use this as the default docker-compose yaml definition
 COMPOSE_FILE=docker-compose.yaml
 #

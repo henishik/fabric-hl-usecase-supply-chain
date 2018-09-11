@@ -68,7 +68,7 @@ Fabric_Client.newDefaultKeyValueStore({ path: store_path
   console.log('Successfully enrolled member user "user1" ');
   return fabric_client.createUser(
      {username: 'user1',
-     mspid: 'TurkTelekomMSP',
+     mspid: 'RegulatorMSP',
      cryptoContent: { privateKeyPEM: enrollment.key.toBytes(), signedCertPEM: enrollment.certificate }
      });
 }).then((user) => {
