@@ -2,7 +2,46 @@
 
 A prototype repository for the global tobacco supply chain industrial start-up to pitch my idea for angel investors.
 
-## 
+## A Usecase Scenario
+
+* Authority wants to check which firmer bought which seeds from which seed provider
+* There is a high-quality seed provider in Norway to produce seeds from something (START)
+* Regulator wants to purchase seeds in Norway and give them to firmers in Brazil (Oversea Transportation)
+* There is a firmer who is based in Brazil to grow leafs from seeds
+* Regulator wants to purchase the leafs in Brazil and give them to factory in Indonesia (Oversea Transportation)
+* There is a factory in Indonesia to produce packages from leafs
+* Regulator wants to purchase the packages in Indonesia and give them to Retailer in Russia (Oversea Transportation)
+* There is a retailer in Russia to sell products
+* There is a consumer in Russian to buy products to consume (END)
+
+## Industrial Players
+
+* Regulators
+  * WHO
+  * Govornments
+* Production Companies
+  * JT International (JTI) - Japan, HQ-Switzerland
+  * JT Group - Japan, HQ-Japan
+  * Philip Morris International (PMI) - US, HQ-Switzerland
+  * Altria - US
+  * British American Tobacco (BAT) - UK
+  * Reynolds American - US
+  * Imperial Brands - UK
+* Labors
+  * Import Authority
+  * Export Authority
+  * Seed Producer
+  * Firmer
+  * Product Factory
+  * Retailers
+* Carriers
+  * Road Carrier
+  * Oversea Carrier
+* Consumers
+
+## Core Functionalities
+
+...
 
 ## List of Potential Angel Investors
 
