@@ -7,29 +7,30 @@ app.use(bodyParser.json())
 const port = process.env.PORT || 9998
 const router = express.Router()
 
+var Fabric_Client = require('fabric-client');
+var path = require('path');
+var util = require('util');
+var os = require('os');
+var fabric_client = new Fabric_Client();
+var channel = fabric_client.newChannel('global-common-channel-layer');
+var peer = fabric_client.newPeer('grpc://localhost:7051');
+channel.addPeer(peer);
+var member_user = null;
+var store_path = path.join(__dirname, 'hfc-key-store');
+var order = fabric_client.newOrderer('grpc://localhost:7050')
+channel.addOrderer(order);
+var tx_id = null;
+
 router.get('/', function(req, res) {
   res.json({ message: 'hooray! welcome to our api!' })
 });
 
 router.get('/shipment/status/update/:id/:current_status', function(req, res) {
+	// UPDATE
 	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:9999');
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
 	res.setHeader('Access-Control-Allow-Credentials', true);
-
-  var Fabric_Client = require('fabric-client');
-  var path = require('path');
-  var util = require('util');
-  var os = require('os');
-  var fabric_client = new Fabric_Client();
-  var channel = fabric_client.newChannel('global-common-channel-layer');
-  var peer = fabric_client.newPeer('grpc://localhost:7051');
-  channel.addPeer(peer);
-	var order = fabric_client.newOrderer('grpc://localhost:7050')
-	channel.addOrderer(order);
-  var member_user = null;
-  var store_path = path.join(__dirname, 'hfc-key-store');
-	var tx_id = null;
 
 	var target_shipment_id = req.params.id
 	var currentStatus = req.params.current_status
@@ -186,24 +187,11 @@ router.get('/shipment/status/update/:id/:current_status', function(req, res) {
 });
 
 router.get('/shipment/assigncarrier/:id', function(req, res) {
+	// UPDATE
 	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:9999');
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
 	res.setHeader('Access-Control-Allow-Credentials', true);
-
-  var Fabric_Client = require('fabric-client');
-  var path = require('path');
-  var util = require('util');
-  var os = require('os');
-  var fabric_client = new Fabric_Client();
-  var channel = fabric_client.newChannel('global-common-channel-layer');
-  var peer = fabric_client.newPeer('grpc://localhost:7051');
-  channel.addPeer(peer);
-	var order = fabric_client.newOrderer('grpc://localhost:7050')
-	channel.addOrderer(order);
-  var member_user = null;
-  var store_path = path.join(__dirname, 'hfc-key-store');
-	var tx_id = null;
 
 	var target_shipment_id = req.params.id
 
@@ -342,24 +330,11 @@ router.get('/shipment/assigncarrier/:id', function(req, res) {
 })
 
 router.get('/shipment/create', function(req, res) {
+	// UPDATE
 	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:9999');
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
 	res.setHeader('Access-Control-Allow-Credentials', true);
-
-  var Fabric_Client = require('fabric-client');
-  var path = require('path');
-  var util = require('util');
-  var os = require('os');
-  var fabric_client = new Fabric_Client();
-  var channel = fabric_client.newChannel('global-common-channel-layer');
-  var peer = fabric_client.newPeer('grpc://localhost:7051');
-  channel.addPeer(peer);
-	var order = fabric_client.newOrderer('grpc://localhost:7050')
-	channel.addOrderer(order);
-  var member_user = null;
-  var store_path = path.join(__dirname, 'hfc-key-store');
-	var tx_id = null;
 
 	// create the key value store as defined in the fabric-client/config/default.json 'key-value-store' setting
 	Fabric_Client.newDefaultKeyValueStore({ path: store_path
@@ -496,23 +471,12 @@ router.get('/shipment/create', function(req, res) {
 });
 
 router.get('/shipment/list/shipper/:id', function(req, res) {
+	// QUERY
 	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:9999');
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
 	res.setHeader('Access-Control-Allow-Credentials', true);
 
-  var Fabric_Client = require('fabric-client');
-  var path = require('path');
-  var util = require('util');
-  var os = require('os');
-  var fabric_client = new Fabric_Client();
-  var channel = fabric_client.newChannel('global-common-channel-layer');
-  var peer = fabric_client.newPeer('grpc://localhost:7051');
-  channel.addPeer(peer);
-  var member_user = null;
-  var store_path = path.join(__dirname, 'hfc-key-store');
-
-	var tx_id = null;
 	var shipper_id = req.params.id;
 
   // create the key value store as defined in the fabric-client/config/default.json 'key-value-store' setting
@@ -568,28 +532,11 @@ router.get('/shipment/list/shipper/:id', function(req, res) {
 })
 
 router.get('/location/log/:shipment_id', function(req, res) {
-	/**
-	 * An endpoint to 
-	 */
+	// UPDATE
 	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:9999');
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
 	res.setHeader('Access-Control-Allow-Credentials', true);
-
-  var Fabric_Client = require('fabric-client');
-  var path = require('path');
-  var util = require('util');
-  var os = require('os');
-  var fabric_client = new Fabric_Client();
-  var channel = fabric_client.newChannel('global-common-channel-layer');
-  var peer = fabric_client.newPeer('grpc://localhost:7051');
-  channel.addPeer(peer);
-	var order = fabric_client.newOrderer('grpc://localhost:7050')
-	channel.addOrderer(order);
-  var member_user = null;
-  var store_path = path.join(__dirname, 'hfc-key-store');
-
-	var tx_id = null;
 
 	// create the key value store as defined in the fabric-client/config/default.json 'key-value-store' setting
 	Fabric_Client.newDefaultKeyValueStore({ path: store_path
@@ -726,26 +673,11 @@ router.get('/location/log/:shipment_id', function(req, res) {
 }
 )
 router.get('/location/get/:shipmentKey', function(req, res) {
-	/**
-	 * An endpoint to 
-	 */
+	// QUERY
 	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:9999');
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
 	res.setHeader('Access-Control-Allow-Credentials', true);
-
-  var Fabric_Client = require('fabric-client');
-  var path = require('path');
-  var util = require('util');
-  var os = require('os');
-  var fabric_client = new Fabric_Client();
-  var channel = fabric_client.newChannel('global-common-channel-layer');
-  var peer = fabric_client.newPeer('grpc://localhost:7051');
-  channel.addPeer(peer);
-  var member_user = null;
-  var store_path = path.join(__dirname, 'hfc-key-store');
-
-	var tx_id = null;
 
   // create the key value store as defined in the fabric-client/config/default.json 'key-value-store' setting
   Fabric_Client.newDefaultKeyValueStore({ path: store_path
@@ -800,26 +732,11 @@ router.get('/location/get/:shipmentKey', function(req, res) {
 })
 
 router.get('/shipment/list/carrier', function(req, res) {
-	/**
-	 * An endpoint to 
-	 */
+	// QUERY
 	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:9999');
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
 	res.setHeader('Access-Control-Allow-Credentials', true);
-
-  var Fabric_Client = require('fabric-client');
-  var path = require('path');
-  var util = require('util');
-  var os = require('os');
-  var fabric_client = new Fabric_Client();
-  var channel = fabric_client.newChannel('global-common-channel-layer');
-  var peer = fabric_client.newPeer('grpc://localhost:7051');
-  channel.addPeer(peer);
-  var member_user = null;
-  var store_path = path.join(__dirname, 'hfc-key-store');
-
-	var tx_id = null;
 
   // create the key value store as defined in the fabric-client/config/default.json 'key-value-store' setting
   Fabric_Client.newDefaultKeyValueStore({ path: store_path
@@ -873,29 +790,17 @@ router.get('/shipment/list/carrier', function(req, res) {
   });
 })
 
+
 router.get('/list/shipment', function(req, res) {
+	// QUERY
 	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:9999');
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
 	res.setHeader('Access-Control-Allow-Credentials', true);
 
-  var Fabric_Client = require('fabric-client');
-  var path = require('path');
-  var util = require('util');
-  var os = require('os');
-  var fabric_client = new Fabric_Client();
-  var channel = fabric_client.newChannel('global-common-channel-layer');
-  var peer = fabric_client.newPeer('grpc://localhost:7051');
-  channel.addPeer(peer);
-  var member_user = null;
-  var store_path = path.join(__dirname, 'hfc-key-store');
-
-  console.log('Store path:'+store_path);
-  var tx_id = null;
-
-  // create the key value store as defined in the fabric-client/config/default.json 'key-value-store' setting
   Fabric_Client.newDefaultKeyValueStore({ path: store_path
   }).then((state_store) => {
+    // create the key value store as defined in the fabric-client/config/default.json 'key-value-store' setting
   	// assign the store to the fabric client
   	fabric_client.setStateStore(state_store);
   	var crypto_suite = Fabric_Client.newCryptoSuite();
@@ -943,7 +848,6 @@ router.get('/list/shipment', function(req, res) {
   }).catch((err) => {
   	console.error('Failed to query successfully :: ' + err);
   });
-
 });
 
 app.use('/api', router)
