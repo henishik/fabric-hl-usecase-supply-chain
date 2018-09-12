@@ -119,6 +119,21 @@ installChaincode () {
 	echo
 }
 
+initShipmentLedger () {
+	PEER=$1
+	ORG=$2
+	setGlobals $PEER $ORG
+	VERSION=${3:-1.0}
+        set -x
+	peer chaincode invoke -o orderer.ki-decentralized.de:7050 -C global-common-channel-layer -n mycc -c '{"function":"initShipmentLedger","Args":[""]}' >&log.txt
+	res=$?
+        set +x
+
+	cat log.txt
+	echo "=====================  InitShipmentLedger successfully ===================== "
+	sleep $DELAY
+}
+
 instantiateChaincode () {
 	PEER=$1
 	ORG=$2

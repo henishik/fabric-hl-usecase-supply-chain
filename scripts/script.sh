@@ -79,6 +79,9 @@ instantiateChaincode 0 1
 # instantiateChaincode 0 2 SOME HOW GET AN ERROR WHEN INSTANTIATE ON PEER2
 # instantiateChaincode 0 3 SOME HOW GET AN ERROR WHEN INSTANTIATE ON PEER3
 
+echo "initing Ledger..."
+initShipmentLedger 0 1
+
 echo
 echo "========= All GOOD, execution completed =========== "
 echo
