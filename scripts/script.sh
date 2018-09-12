@@ -21,7 +21,6 @@ fi
 
 echo "Channel name : "$CHANNEL_NAME
 
-# import utils
 . scripts/utils.sh
 
 createChannel() {
