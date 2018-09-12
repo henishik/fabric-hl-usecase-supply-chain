@@ -17,7 +17,7 @@ var os = require('os');
 var fabric_client = new Fabric_Client();
 
 // setup the fabric network
-var channel = fabric_client.newChannel('mychannel');
+var channel = fabric_client.newChannel('global-common-channel-layer');
 var peer = fabric_client.newPeer('grpc://localhost:7051');
 channel.addPeer(peer);
 var order = fabric_client.newOrderer('grpc://localhost:7050')
@@ -60,10 +60,10 @@ Fabric_Client.newDefaultKeyValueStore({ path: store_path
 	// must send the proposal to endorsing peers
 	var request = {
 		//targets: let default to the peer assigned to the client
-		chaincodeId: 'fabcar',
-		fcn: 'createShipment',
+		chaincodeId: 'cc-supplychain',
+		fcn: 'queryAllShipments',
 		args: [''],
-		chainId: 'mychannel',
+		chainId: 'global-common-channel-layer',
 		txId: tx_id
 	};
 

@@ -28,12 +28,12 @@ cryptogen generate --config=./crypto-config.yaml
 ### 1.2. Generate channel artifacts for each participant organizations
 
 ```
-configtxgen -profile TurkTelecomOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
+configtxgen -profile GlobalOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
 
-configtxgen -profile TurkTelecomeChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID $CHANNEL_NAME
-configtxgen -profile TurkTelecomeChannel -outputAnchorPeersUpdate ./channel-artifacts/TurkTelekomMSPanchors.tx -channelID $CHANNEL_NAME -asOrg TurkTelekomMSP
-configtxgen -profile TurkTelecomeChannel -outputAnchorPeersUpdate ./channel-artifacts/TurkcellMSPanchors.tx -channelID $CHANNEL_NAME -asOrg TurkcellMSP
-configtxgen -profile TurkTelecomeChannel -outputAnchorPeersUpdate ./channel-artifacts/VodafoneMSPanchors.tx -channelID $CHANNEL_NAME -asOrg VodafoneMSP
+configtxgen -profile GlobalLogisticsChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID $CHANNEL_NAME
+configtxgen -profile GlobalLogisticsChannel -outputAnchorPeersUpdate ./channel-artifacts/RegulatorMSPanchors.tx -channelID $CHANNEL_NAME -asOrg RegulatorMSP
+configtxgen -profile GlobalLogisticsChannel -outputAnchorPeersUpdate ./channel-artifacts/ShipperMSPanchors.tx -channelID $CHANNEL_NAME -asOrg ShipperMSP
+configtxgen -profile GlobalLogisticsChannel -outputAnchorPeersUpdate ./channel-artifacts/CarrierMSPanchors.tx -channelID $CHANNEL_NAME -asOrg CarrierMSP
 ```
 
 ## 2. Build Docker Containers (each peers, singleton orderer)
@@ -64,22 +64,22 @@ peer channel update -o orderer.ki-decentralized.de:7050 -c $CHANNEL_NAME -f ./ch
 
 ### 3.1. Install Chaincode on peer0 for each organizations
 ```
-peer chaincode install -n mycc -v ${VERSION} -l ${LANGUAGE} -p ${CC_SRC_PATH}
+peer chaincode install -n cc-supplychain -v ${VERSION} -l ${LANGUAGE} -p ${CC_SRC_PATH}
 ```
 
 ### 3.2. Instantiate Chaincode
 ```
-peer chaincode instantiate -o orderer.ki-decentralized.de:7050 -C $CHANNEL_NAME -n mycc -l ${LANGUAGE} -v ${VERSION} -c '{"Args":["init"]}'
+peer chaincode instantiate -o orderer.ki-decentralized.de:7050 -C $CHANNEL_NAME -n cc-supplychain -l ${LANGUAGE} -v ${VERSION} -c '{"Args":["init"]}'
 ```
 
 ### 3.3. Invoke InitLedger function on a chaincode
 ```
-peer chaincode invoke -o orderer.ki-decentralized.de:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["initLedger"]}'
+peer chaincode invoke -o orderer.ki-decentralized.de:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n cc-supplychain -c '{"Args":["initLedger"]}'
 ```
 
 ### 3.4. Invoke quaryAll function on a chaincode for a test
 ```
-peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem -C turktelcomchannel -n mycc -c '{"Args":["queryAllCustomers"]}'
+peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem -C turktelcomchannel -n cc-supplychain -c '{"Args":["queryAllCustomers"]}'
 ```
 
 # B. User-faced application to manage data
@@ -146,9 +146,9 @@ peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile /o
 "orderers":[
 			{
 			"mspid": "OrdererMSP",
-			"server-hostname":"orderer.example.com",
+			"server-hostname":"orderer.ki-decentralized.de",
 			"requests":"grpcs://127.0.0.1:7050",
-			"tls_cacerts":"fabric-path/fabric-samples/first-network/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt"
+			"tls_cacerts":"fabric-path/fabric-samples/first-network/crypto-config/ordererOrganizations/example.com/orderers/orderer.ki-decentralized.de/tls/ca.crt"
 			}
 			],
 "keyValueStore": "/tmp/fabric-client-kvs",
