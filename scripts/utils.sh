@@ -9,7 +9,6 @@ verifyResult () {
 }
 
 setOrdererGlobals() {
-	# Set OrdererOrg.Admin globals
   CORE_PEER_LOCALMSPID="OrdererMSP"
   CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem
   CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/users/Admin@ki-decentralized.de/msp
@@ -18,10 +17,12 @@ setOrdererGlobals() {
 setGlobals () {
 	PEER=$1
 	ORG=$2
+
 	if [ $ORG -eq 1 ] ; then
 		CORE_PEER_LOCALMSPID="RegulatorMSP"
 		CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/regulator.com/peers/peer0.regulator.com/tls/ca.crt
 		CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/regulator.com/users/Admin@regulator.com/msp
+
 		if [ $PEER -eq 0 ]; then
 			CORE_PEER_ADDRESS=peer0.regulator.com:7051
 		else
@@ -32,6 +33,7 @@ setGlobals () {
 		CORE_PEER_LOCALMSPID="ShipperMSP"
 		CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/shipper.com/peers/peer0.shipper.com/tls/ca.crt
 		CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/shipper.com/users/Admin@shipper.com/msp
+
 		if [ $PEER -eq 0 ]; then
 			CORE_PEER_ADDRESS=peer0.shipper.com:7051
 		else
@@ -42,6 +44,7 @@ setGlobals () {
 		CORE_PEER_LOCALMSPID="CarrierMSP"
 		CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/carrier.com/peers/peer0.carrier.com/tls/ca.crt
 		CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/carrier.com/users/Admin@carrier.com/msp
+
 		if [ $PEER -eq 0 ]; then
 			CORE_PEER_ADDRESS=peer0.carrier.com:7051
 		else
@@ -107,13 +110,28 @@ installChaincode () {
 	setGlobals $PEER $ORG
 	VERSION=${3:-1.0}
         set -x
-	peer chaincode install -n mycc -v ${VERSION} -l ${LANGUAGE} -p ${CC_SRC_PATH} >&log.txt
+	peer chaincode install -n cc-supplychain -v ${VERSION} -l ${LANGUAGE} -p ${CC_SRC_PATH} >&log.txt
 	res=$?
         set +x
 	cat log.txt
 	verifyResult $res "Chaincode installation on peer${PEER}.org${ORG} has Failed"
 	echo "===================== Chaincode is installed on peer${PEER}.org${ORG} ===================== "
 	echo
+}
+
+initShipmentLedger () {
+	PEER=$1
+	ORG=$2
+	setGlobals $PEER $ORG
+	VERSION=${3:-1.0}
+        set -x
+	peer chaincode invoke -o orderer.ki-decentralized.de:7050 -C global-common-channel-layer -n cc-supplychain -c '{"function":"initShipmentLedger","Args":[""]}' >&log.txt
+	res=$?
+        set +x
+
+	cat log.txt
+	echo "=====================  InitShipmentLedger successfully ===================== "
+	sleep $DELAY
 }
 
 instantiateChaincode () {
@@ -125,15 +143,16 @@ instantiateChaincode () {
 
 	if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
                 set -x
-		peer chaincode instantiate -o orderer.ki-decentralized.de:7050 -C $CHANNEL_NAME -n mycc -l ${LANGUAGE} -v ${VERSION} -c '{"Args":["init"]}' >&log.txt
+		peer chaincode instantiate -o orderer.ki-decentralized.de:7050 -C $CHANNEL_NAME -n cc-supplychain -l ${LANGUAGE} -v ${VERSION} -c '{"Args":["init"]}' >&log.txt
 		res=$?
                 set +x
 	else
                 set -x
-		peer chaincode instantiate -o orderer.ki-decentralized.de:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -l ${LANGUAGE} -v 1.0 -c '{"Args":["init"]}' >&log.txt
+		peer chaincode instantiate -o orderer.ki-decentralized.de:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n cc-supplychain -l ${LANGUAGE} -v 1.0 -c '{"Args":["init"]}' >&log.txt
 		res=$?
                 set +x
 	fi
+	sleep $DELAY
 	cat log.txt
 	verifyResult $res "Chaincode instantiation on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME' failed"
 	echo "===================== Chaincode Instantiation on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME' is successful ===================== "
@@ -146,7 +165,7 @@ upgradeChaincode () {
     setGlobals $PEER $ORG
 
     set -x
-    peer chaincode upgrade -o orderer.ki-decentralized.de:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 2.0 -c '{"Args":["init","a","90","b","210"]}' -P "OR ('Org1MSP.peer','Org2MSP.peer','Org3MSP.peer')"
+    peer chaincode upgrade -o orderer.ki-decentralized.de:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n cc-supplychain -v 2.0 -c '{"Args":["init","a","90","b","210"]}' -P "OR ('Org1MSP.peer','Org2MSP.peer','Org3MSP.peer')"
     res=$?
 	set +x
     cat log.txt
@@ -171,7 +190,7 @@ chaincodeQuery () {
      sleep $DELAY
      echo "Attempting to Query peer${PEER}.org${ORG} ...$(($(date +%s)-starttime)) secs"
      set -x
-     peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt
+     peer chaincode query -C $CHANNEL_NAME -n cc-supplychain -c '{"Args":["query","a"]}' >&log.txt
 	 res=$?
      set +x
      test $res -eq 0 && VALUE=$(cat log.txt | awk '/Query Result/ {print $NF}')
@@ -251,12 +270,12 @@ chaincodeInvoke () {
 	# lets supply it directly as we know it using the "-o" option
 	if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
                 set -x
-		peer chaincode invoke -o orderer.ki-decentralized.de:7050 -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt
+		peer chaincode invoke -o orderer.ki-decentralized.de:7050 -C $CHANNEL_NAME -n cc-supplychain -c '{"Args":["invoke","a","b","10"]}' >&log.txt
 		res=$?
                 set +x
 	else
                 set -x
-		peer chaincode invoke -o orderer.ki-decentralized.de:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt
+		peer chaincode invoke -o orderer.ki-decentralized.de:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n cc-supplychain -c '{"Args":["invoke","a","b","10"]}' >&log.txt
 		res=$?
                 set +x
 	fi

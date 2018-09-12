@@ -64,22 +64,22 @@ peer channel update -o orderer.ki-decentralized.de:7050 -c $CHANNEL_NAME -f ./ch
 
 ### 3.1. Install Chaincode on peer0 for each organizations
 ```
-peer chaincode install -n mycc -v ${VERSION} -l ${LANGUAGE} -p ${CC_SRC_PATH}
+peer chaincode install -n cc-supplychain -v ${VERSION} -l ${LANGUAGE} -p ${CC_SRC_PATH}
 ```
 
 ### 3.2. Instantiate Chaincode
 ```
-peer chaincode instantiate -o orderer.ki-decentralized.de:7050 -C $CHANNEL_NAME -n mycc -l ${LANGUAGE} -v ${VERSION} -c '{"Args":["init"]}'
+peer chaincode instantiate -o orderer.ki-decentralized.de:7050 -C $CHANNEL_NAME -n cc-supplychain -l ${LANGUAGE} -v ${VERSION} -c '{"Args":["init"]}'
 ```
 
 ### 3.3. Invoke InitLedger function on a chaincode
 ```
-peer chaincode invoke -o orderer.ki-decentralized.de:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["initLedger"]}'
+peer chaincode invoke -o orderer.ki-decentralized.de:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n cc-supplychain -c '{"Args":["initLedger"]}'
 ```
 
 ### 3.4. Invoke quaryAll function on a chaincode for a test
 ```
-peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem -C turktelcomchannel -n mycc -c '{"Args":["queryAllCustomers"]}'
+peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem -C turktelcomchannel -n cc-supplychain -c '{"Args":["queryAllCustomers"]}'
 ```
 
 # B. User-faced application to manage data

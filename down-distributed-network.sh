@@ -8,9 +8,6 @@ function clearContainers () {
 }
 
 function removeUnwantedImages() {
-  # Delete any images that were generated as a part of this setup
-  # specifically the following images are often left behind:
-  # TODO list generated image naming patterns
   DOCKER_IMAGE_IDS=$(docker images | grep "dev\|none\|test-vp\|peer[0-9]-" | awk '{print $3}')
   if [ -z "$DOCKER_IMAGE_IDS" -o "$DOCKER_IMAGE_IDS" == " " ]; then
     echo "---- No images available for deletion ----"
@@ -25,6 +22,13 @@ function networkDown () {
 
   # Don't remove the generated artifacts -- note, the ledgers are always removed
   if [ "$MODE" != "restart" ]; then
+    # Reset default CA_PRIVATE_KEY
+    CURRENT_DIR=$PWD
+    cd crypto-config/peerOrganizations/regulator.com/ca/
+    PRIV_KEY=$(ls *_sk)
+    cd "$CURRENT_DIR"
+    sed -i "" "s/${PRIV_KEY}/CA_PRIVATE_KEY/g" docker-compose.yaml
+
     # Bring down the network, deleting the volumes
     #Delete any ledger backups
     docker run -v $PWD:/tmp/first-network --rm hyperledger/fabric-tools:$IMAGETAG rm -Rf /tmp/first-network/ledgers-backup
@@ -39,23 +43,13 @@ function networkDown () {
   fi
 }
 
-# Obtain the OS and Architecture string that will be used to select the correct
-# native binaries for your platform
 OS_ARCH=$(echo "$(uname -s|tr '[:upper:]' '[:lower:]'|sed 's/mingw64_nt.*/windows/')-$(uname -m | sed 's/x86_64/amd64/g')" | awk '{print tolower($0)}')
-# timeout duration - the duration the CLI should wait for a response from
-# another container before giving up
 CLI_TIMEOUT=10
-# default for delay between commands
 CLI_DELAY=3
-# channel name defaults to "mychannel"
 CHANNEL_NAME="global-common-channel-layer"
-# use this as the default docker-compose yaml definition
 COMPOSE_FILE=docker-compose.yaml
-#
 COMPOSE_FILE_COUCH=docker-compose-couch.yaml
-# use golang as the default language for chaincode
 LANGUAGE=golang
-# default image tag
 IMAGETAG="latest"
 
 networkDown

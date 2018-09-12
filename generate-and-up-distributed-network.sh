@@ -41,7 +41,6 @@ function checkPrereqs() {
 }
 
 function networkUp () {
-  # Generate the needed certificates, the genesis block and start the network.
   checkPrereqs
 
   if [ ! -d "crypto-config" ]; then
@@ -66,25 +65,24 @@ function networkUp () {
     echo "ERROR !!!! Test failed"
     exit 1
   fi
+
+  CURRENT_DIR=$PWD
+  cd middleware
+  rm -rf hfc-key-store
+  kill $(lsof -t -i:8080)
+
+  node enrollAdmin.js
+  node registerUser.js
+  node index.js &
+  open http://localhost:9998/api/list/shipment
 }
 
-# Obtain the OS and Architecture string that will be used to select the correct
-# native binaries for your platform
 OS_ARCH=$(echo "$(uname -s|tr '[:upper:]' '[:lower:]'|sed 's/mingw64_nt.*/windows/')-$(uname -m | sed 's/x86_64/amd64/g')" | awk '{print tolower($0)}')
-# timeout duration - the duration the CLI should wait for a response from
-# another container before giving up
 CLI_TIMEOUT=10
-# default for delay between commands
 CLI_DELAY=3
-# channel name defaults to "mychannel"
 CHANNEL_NAME="global-common-channel-layer"
-# use this as the default docker-compose yaml definition
 COMPOSE_FILE=docker-compose.yaml
-#
-# COMPOSE_FILE_COUCH=docker-compose-couch.yaml
-# use golang as the default language for chaincode
 LANGUAGE=golang
-# default image tag
 IMAGETAG="latest"
 
 # Main Function
