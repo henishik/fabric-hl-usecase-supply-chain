@@ -22,6 +22,13 @@ function networkDown () {
 
   # Don't remove the generated artifacts -- note, the ledgers are always removed
   if [ "$MODE" != "restart" ]; then
+    # Reset default CA_PRIVATE_KEY
+    CURRENT_DIR=$PWD
+    cd crypto-config/peerOrganizations/regulator.com/ca/
+    PRIV_KEY=$(ls *_sk)
+    cd "$CURRENT_DIR"
+    sed -i "" "s/${PRIV_KEY}/CA_PRIVATE_KEY/g" docker-compose.yaml
+
     # Bring down the network, deleting the volumes
     #Delete any ledger backups
     docker run -v $PWD:/tmp/first-network --rm hyperledger/fabric-tools:$IMAGETAG rm -Rf /tmp/first-network/ledgers-backup
