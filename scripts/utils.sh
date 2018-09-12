@@ -9,7 +9,6 @@ verifyResult () {
 }
 
 setOrdererGlobals() {
-	# Set OrdererOrg.Admin globals
   CORE_PEER_LOCALMSPID="OrdererMSP"
   CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem
   CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/users/Admin@ki-decentralized.de/msp
@@ -18,10 +17,12 @@ setOrdererGlobals() {
 setGlobals () {
 	PEER=$1
 	ORG=$2
+
 	if [ $ORG -eq 1 ] ; then
 		CORE_PEER_LOCALMSPID="RegulatorMSP"
 		CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/regulator.com/peers/peer0.regulator.com/tls/ca.crt
 		CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/regulator.com/users/Admin@regulator.com/msp
+
 		if [ $PEER -eq 0 ]; then
 			CORE_PEER_ADDRESS=peer0.regulator.com:7051
 		else
@@ -32,6 +33,7 @@ setGlobals () {
 		CORE_PEER_LOCALMSPID="ShipperMSP"
 		CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/shipper.com/peers/peer0.shipper.com/tls/ca.crt
 		CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/shipper.com/users/Admin@shipper.com/msp
+
 		if [ $PEER -eq 0 ]; then
 			CORE_PEER_ADDRESS=peer0.shipper.com:7051
 		else
@@ -42,6 +44,7 @@ setGlobals () {
 		CORE_PEER_LOCALMSPID="CarrierMSP"
 		CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/carrier.com/peers/peer0.carrier.com/tls/ca.crt
 		CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/carrier.com/users/Admin@carrier.com/msp
+
 		if [ $PEER -eq 0 ]; then
 			CORE_PEER_ADDRESS=peer0.carrier.com:7051
 		else
