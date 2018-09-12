@@ -60,7 +60,7 @@ Fabric_Client.newDefaultKeyValueStore({ path: store_path
 	// must send the proposal to endorsing peers
 	var request = {
 		//targets: let default to the peer assigned to the client
-		chaincodeId: 'mycc',
+		chaincodeId: 'cc-supplychain',
 		fcn: 'queryAllShipments',
 		args: [''],
 		chainId: 'global-common-channel-layer',

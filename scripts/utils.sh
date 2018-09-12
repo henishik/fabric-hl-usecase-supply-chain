@@ -110,7 +110,7 @@ installChaincode () {
 	setGlobals $PEER $ORG
 	VERSION=${3:-1.0}
         set -x
-	peer chaincode install -n mycc -v ${VERSION} -l ${LANGUAGE} -p ${CC_SRC_PATH} >&log.txt
+	peer chaincode install -n cc-supplychain -v ${VERSION} -l ${LANGUAGE} -p ${CC_SRC_PATH} >&log.txt
 	res=$?
         set +x
 	cat log.txt
@@ -125,7 +125,7 @@ initShipmentLedger () {
 	setGlobals $PEER $ORG
 	VERSION=${3:-1.0}
         set -x
-	peer chaincode invoke -o orderer.ki-decentralized.de:7050 -C global-common-channel-layer -n mycc -c '{"function":"initShipmentLedger","Args":[""]}' >&log.txt
+	peer chaincode invoke -o orderer.ki-decentralized.de:7050 -C global-common-channel-layer -n cc-supplychain -c '{"function":"initShipmentLedger","Args":[""]}' >&log.txt
 	res=$?
         set +x
 
@@ -143,12 +143,12 @@ instantiateChaincode () {
 
 	if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
                 set -x
-		peer chaincode instantiate -o orderer.ki-decentralized.de:7050 -C $CHANNEL_NAME -n mycc -l ${LANGUAGE} -v ${VERSION} -c '{"Args":["init"]}' >&log.txt
+		peer chaincode instantiate -o orderer.ki-decentralized.de:7050 -C $CHANNEL_NAME -n cc-supplychain -l ${LANGUAGE} -v ${VERSION} -c '{"Args":["init"]}' >&log.txt
 		res=$?
                 set +x
 	else
                 set -x
-		peer chaincode instantiate -o orderer.ki-decentralized.de:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -l ${LANGUAGE} -v 1.0 -c '{"Args":["init"]}' >&log.txt
+		peer chaincode instantiate -o orderer.ki-decentralized.de:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n cc-supplychain -l ${LANGUAGE} -v 1.0 -c '{"Args":["init"]}' >&log.txt
 		res=$?
                 set +x
 	fi
@@ -165,7 +165,7 @@ upgradeChaincode () {
     setGlobals $PEER $ORG
 
     set -x
-    peer chaincode upgrade -o orderer.ki-decentralized.de:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 2.0 -c '{"Args":["init","a","90","b","210"]}' -P "OR ('Org1MSP.peer','Org2MSP.peer','Org3MSP.peer')"
+    peer chaincode upgrade -o orderer.ki-decentralized.de:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n cc-supplychain -v 2.0 -c '{"Args":["init","a","90","b","210"]}' -P "OR ('Org1MSP.peer','Org2MSP.peer','Org3MSP.peer')"
     res=$?
 	set +x
     cat log.txt
@@ -190,7 +190,7 @@ chaincodeQuery () {
      sleep $DELAY
      echo "Attempting to Query peer${PEER}.org${ORG} ...$(($(date +%s)-starttime)) secs"
      set -x
-     peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt
+     peer chaincode query -C $CHANNEL_NAME -n cc-supplychain -c '{"Args":["query","a"]}' >&log.txt
 	 res=$?
      set +x
      test $res -eq 0 && VALUE=$(cat log.txt | awk '/Query Result/ {print $NF}')
@@ -270,12 +270,12 @@ chaincodeInvoke () {
 	# lets supply it directly as we know it using the "-o" option
 	if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
                 set -x
-		peer chaincode invoke -o orderer.ki-decentralized.de:7050 -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt
+		peer chaincode invoke -o orderer.ki-decentralized.de:7050 -C $CHANNEL_NAME -n cc-supplychain -c '{"Args":["invoke","a","b","10"]}' >&log.txt
 		res=$?
                 set +x
 	else
                 set -x
-		peer chaincode invoke -o orderer.ki-decentralized.de:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt
+		peer chaincode invoke -o orderer.ki-decentralized.de:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n cc-supplychain -c '{"Args":["invoke","a","b","10"]}' >&log.txt
 		res=$?
                 set +x
 	fi

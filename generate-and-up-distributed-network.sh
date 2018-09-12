@@ -69,7 +69,8 @@ function networkUp () {
   CURRENT_DIR=$PWD
   cd middleware
   rm -rf hfc-key-store
-  ps aux | grep 9998 | awk '{print $2}'
+  kill $(lsof -t -i:8080)
+
   node enrollAdmin.js
   node registerUser.js
   node index.js &

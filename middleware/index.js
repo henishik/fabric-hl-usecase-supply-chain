@@ -54,7 +54,7 @@ function queryMain(args, funcName, res) {
 		}
 
   	const request = {
-  		chaincodeId: 'mycc',
+  		chaincodeId: 'cc-supplychain',
   		fcn: funcName,
   		args: [args]
   	};
@@ -106,7 +106,7 @@ function InvokeMain(args, funcName, res) {
 	
 		tx_id = fabric_client.newTransactionID();
 		var request = {
-			chaincodeId: 'mycc',
+			chaincodeId: 'cc-supplychain',
 			fcn: funcName,
 			args: args,
 			chainId: 'global-common-channel-layer',

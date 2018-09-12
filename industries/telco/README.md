@@ -15,17 +15,17 @@ CORE_PEER_LOCALMSPID=RegulatorMSP
 CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/regulator.com/peers/peer0.regulator.com/tls/ca.crt
 CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/regulator.com/peers/peer0.regulator.com/tls/server.key
 
-$ peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem -C global-common-channel-layer -n mycc -c '{"Args":["initLedger"]}'
+$ peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem -C global-common-channel-layer -n cc-supplychain -c '{"Args":["initLedger"]}'
 -> OUTPUT
 [chaincodeCmd] chaincodeInvokeOrQuery -> INFO 001 Chaincode invoke successful. result: status:200
 
-$ peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem -C global-common-channel-layer -n mycc -c '{"Args":["queryAllCustomer"]}'
+$ peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem -C global-common-channel-layer -n cc-supplychain -c '{"Args":["queryAllCustomer"]}'
 -> OUTPUT
 [chaincodeCmd] chaincodeInvokeOrQuery -> INFO 001 Chaincode invoke successful. result: status:200 payload:"[{\"Key\":\"0\", \"Record\":{\"name\":\"Alice\"}},{\"Key\":\"1\", \"Record\":{\"name\":\"Bob\"}},{\"Key\":\"2\", \"Record\":{\"name\":\"Alex\"}},{\"Key\":\"3\", \"Record\":{\"name\":\"Tom\"}},{\"Key\":\"4\", \"Record\":{\"name\":\"Michel\"}}]"
 
-$ peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem -C global-common-channel-layer -n mycc -c '{"Args":["addCustomerToBlacklist", "99", "NAME", "YES"]}'
+$ peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem -C global-common-channel-layer -n cc-supplychain -c '{"Args":["addCustomerToBlacklist", "99", "NAME", "YES"]}'
 
-$ peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem -C global-common-channel-layer -n mycc -c '{"Args":["modifyCustomerStatus", "99", "NAMEMODIFY"]}'
+$ peer chaincode invoke -o orderer.ki-decentralized.de:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem -C global-common-channel-layer -n cc-supplychain -c '{"Args":["modifyCustomerStatus", "99", "NAMEMODIFY"]}'
 ```
 
 ### Things to check
@@ -116,7 +116,7 @@ At a point, it runs a dlt network which consists of a channel, three organizatio
 ```
 $ docker exec -it 'cli' bash
 
-$ peer chaincode update -o orderer.ki-decentralized.de:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem -C turktelcomchannel -n mycc -c '{"Args":["wrong function", "0"]}'
+$ peer chaincode update -o orderer.ki-decentralized.de:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ki-decentralized.de/orderers/orderer.ki-decentralized.de/msp/tlscacerts/tlsca.ki-decentralized.de-cert.pem -C turktelcomchannel -n cc-supplychain -c '{"Args":["wrong function", "0"]}'
 ```
 
 
