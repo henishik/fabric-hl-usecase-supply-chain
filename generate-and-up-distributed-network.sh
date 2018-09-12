@@ -65,6 +65,15 @@ function networkUp () {
     echo "ERROR !!!! Test failed"
     exit 1
   fi
+
+  CURRENT_DIR=$PWD
+  cd middleware
+  rm -rf hfc-key-store
+  ps aux | grep 9998 | awk '{print $2}'
+  node enrollAdmin.js
+  node registerUser.js
+  node index.js &
+  open http://localhost:9998/api/list/shipment
 }
 
 OS_ARCH=$(echo "$(uname -s|tr '[:upper:]' '[:lower:]'|sed 's/mingw64_nt.*/windows/')-$(uname -m | sed 's/x86_64/amd64/g')" | awk '{print tolower($0)}')
