@@ -1,6 +1,6 @@
 # Fabric HL SupplyChain Usecase example
 
-An example usecase project in supply chain/logistics. This activity is a part of [IDPP#22](https://github.kigroup.de/ki-decentralized/IDPPs/issues/22)
+An example usecase project in supply chain/logistics.
 
 ## Project Overview
 
@@ -31,7 +31,7 @@ Use a single bootstrap script for DL Network and middleware. Follow manual proce
 ### Pre Requirement
 
 * NodeJS is properly installed
-* Clone repository `https://github.kigroup.de/t-ishikawa/fabric-hl-usecase-supply-chain.git`
+* Clone repository
 * Well-tested on MacOS/Linux
 
 ### DLT Network / Middleware
